@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>使用Git-FTP来实现推送网页到服务器 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="hexo,Git-FTP,博客">
+    <meta name="description" content="由于hexo的ftp突然用不了了，所以找到了一个替代品“Git-FTP”，防止每次都要用ftp客户端重复上传所有博客文件。">
+<meta name="keywords" content="hexo,Git-FTP,博客">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Git-FTP来实现推送网页到服务器">
+<meta property="og:url" content="hxblog.top/post/43298be9.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="由于hexo的ftp突然用不了了，所以找到了一个替代品“Git-FTP”，防止每次都要用ftp客户端重复上传所有博客文件。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-28T08:44:16.134Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Git-FTP来实现推送网页到服务器">
+<meta name="twitter:description" content="由于hexo的ftp突然用不了了，所以找到了一个替代品“Git-FTP”，防止每次都要用ftp客户端重复上传所有博客文件。">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用Git-FTP来实现推送网页到服务器</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用Git-FTP来实现推送网页到服务器</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-28T08:09:43.000Z" itemprop="datePublished" class="page-time">
+  2019-05-28
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Github博客搭建系列/">Github博客搭建系列</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-简介"><span class="post-toc-text">1 简介</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-初次使用"><span class="post-toc-text">2 初次使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1-安装"><span class="post-toc-text">2.1 安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2-初始化public及提交到ftp服务器"><span class="post-toc-text">2.2  初始化public及提交到ftp服务器</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-后续使用"><span class="post-toc-text">3 后续使用</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-使用Git-FTP来实现推送网页到服务器" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用Git-FTP来实现推送网页到服务器</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-28 16:09:43" datetime="2019-05-28T08:09:43.000Z" itemprop="datePublished">2019-05-28</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/Github博客搭建系列/">Github博客搭建系列</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>由于hexo的ftp突然用不了了，所以找到了一个替代品“<a href="https://github.com/git-ftp/git-ftp/blob/master/man/git-ftp.1.md" target="_blank" rel="noopener">Git-FTP</a>”，防止每次都要用ftp客户端重复上传所有博客文件。</p>
+<a id="more"></a>
+<h1 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h1><p>Git-ftp - 作为shell脚本编写的Git驱动的FTP客户端。不需要再客户端安装什么，只要在本地装好脚本即可。非常适合用在<strong>虚拟主机</strong>上。</p>
+<ul>
+<li><a href="https://github.com/git-ftp/git-ftp/blob/master/man/git-ftp.1.md" target="_blank" rel="noopener">用户文档</a></li>
+<li><a href="https://github.com/git-ftp/git-ftp/blob/master/INSTALL.md" target="_blank" rel="noopener">安装教程</a></li>
+</ul>
+<h1 id="2-初次使用"><a href="#2-初次使用" class="headerlink" title="2 初次使用"></a>2 初次使用</h1><h2 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h2><p>因为我的是Windows，所以教程都是按照Windows下来写的。官方的<a href="https://github.com/git-ftp/git-ftp/blob/master/INSTALL.md" target="_blank" rel="noopener">安装教程</a>上面也有详细的说明。</p>
+<ol>
+<li>到Git的安装目录，找到Git bash，管理员运行，然后依次输入以下语句：</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="keyword">https</span>://raw.githubusercontent.com/git-<span class="keyword">ftp</span>/git-<span class="keyword">ftp</span>/master/git-<span class="keyword">ftp</span> > /bin/git-<span class="keyword">ftp</span></span><br><span class="line"></span><br><span class="line">chmod <span class="number">755</span> /bin/git-<span class="keyword">ftp</span></span><br></pre></td></tr></tbody></table></figure>
+<ol start="2">
+<li>检测安装状态</li>
+</ol>
+<figure class="highlight ebnf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">git-ftp -h</span></span><br></pre></td></tr></tbody></table></figure>
+<p>看到下图说明安装好了。按<code>ctrl+z</code>退出。</p>
+<h2 id="2-2-初始化public及提交到ftp服务器"><a href="#2-2-初始化public及提交到ftp服务器" class="headerlink" title="2.2  初始化public及提交到ftp服务器"></a>2.2  初始化public及提交到ftp服务器</h2><p>hexo生成的页面都在public文件夹，所以以下操作都应该到public文件夹下进行</p>
+<ol>
+<li>找到public目录，Git bash here；</li>
+<li>输入以下命令进行配置，注意修改成自己的参数；</li>
+</ol>
+<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//配置<span class="keyword">ftp</span>地址，用户名和密码</span><br><span class="line">git config git-<span class="keyword">ftp</span>.url <span class="keyword">ftp</span>://<span class="keyword">ftp</span>地址:端口/子目录</span><br><span class="line">git config git-<span class="keyword">ftp</span>.user 你的<span class="keyword">ftp</span>用户名</span><br><span class="line">git config git-<span class="keyword">ftp</span>.password 你的<span class="keyword">ftp</span>密码</span><br></pre></td></tr></tbody></table></figure>
+<ol start="3">
+<li>输入<code>git init</code>，进行git初始化；</li>
+<li>输入<code>git add .</code>，将public下面的文件夹都添加；</li>
+<li>输入<code>git commit -m "第一次提交"</code>，将添加的文件都提交；</li>
+<li>输入<code>git ftp init</code>，将文件都上传到ftp…/因为之前都已经配置好了URL和用户名地址，所以只要执行这个命令即可。</li>
+</ol>
+<p>至此，稍等片刻，等待上传。完成后可以打开自己的网页，看看效果。</p>
+<p>注意，由于图片Git是打不开的，所以提示<code>curl: Can't open './post/d9455392/未命名1557458704.png'!</code>这类型的错误不用在意，应该还是上传上去了。实际上我是用在资源文件夹放着图片作为本地备份，然后在文章里用的是图床。这样可以防止图床挂了还有办法补救。新浪图床的歇菜给了我教训啊。</p>
+<h1 id="3-后续使用"><a href="#3-后续使用" class="headerlink" title="3 后续使用"></a>3 后续使用</h1><p>增加或者修改了文章之后，继续在public下面执行：</p>
+<ol>
+<li>输入<code>git add .</code>，将public下面的文件夹都添加；</li>
+<li>输入<code>git commit -m "修改了***/增加了日志***"</code>，将添加的文件都提交；</li>
+<li>输入<code>git ftp push</code>把文件都上传至服务器</li>
+</ol>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-28T08:44:16.134Z" itemprop="dateUpdated">2019-05-28 16:44:16</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git-FTP/">Git-FTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/博客/">博客</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/43298be9.html&title=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/43298be9.html&title=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&source=由于hexo的ftp突然用不了了，所以找到了一个替代品“Git-FTP”，防止每次都要用ftp客户端重复上传所有博客文件。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/43298be9.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&url=hxblog.top/post/43298be9.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/43298be9.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/92d72c3a.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">2019-05-22-学习笔记：Palabosos（5）：运行模拟</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/43298be9.html&title=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/43298be9.html&title=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&source=由于hexo的ftp突然用不了了，所以找到了一个替代品“Git-FTP”，防止每次都要用ftp客户端重复上传所有博客文件。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/43298be9.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用Git-FTP来实现推送网页到服务器》 — 时光之笔&url=hxblog.top/post/43298be9.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/43298be9.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/43298be9.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
