@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习笔记：Palabos（3）基本的数据类型 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Palabos">
+    <meta name="description" content="Palabos基本的数据类型，来自于文档的翻译。 包含： BlockXD，格子描述符，Dynamic，数据处理器">
+<meta name="keywords" content="Palabos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记：Palabos（3）基本的数据类型">
+<meta property="og:url" content="hxblog.top/post/cb4fe6c1.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="Palabos基本的数据类型，来自于文档的翻译。 包含： BlockXD，格子描述符，Dynamic，数据处理器">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/21/VSiplQ.gif">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/21/VSiyh8.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/21/VSkesJ.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/21/VSnjDU.gif">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/21/VpiDI0.png">
+<meta property="og:updated_time" content="2019-05-22T01:40:42.199Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习笔记：Palabos（3）基本的数据类型">
+<meta name="twitter:description" content="Palabos基本的数据类型，来自于文档的翻译。 包含： BlockXD，格子描述符，Dynamic，数据处理器">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/05/21/VSiplQ.gif">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习笔记：Palabos（3）基本的数据类型</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习笔记：Palabos（3）基本的数据类型</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-21T07:02:01.000Z" itemprop="datePublished" class="page-time">
+  2019-05-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-BlockXD"><span class="post-toc-text">1 BlockXD</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-格子描述子"><span class="post-toc-text">2  格子描述子</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-动态类（Dynamics）"><span class="post-toc-text">3 动态类（Dynamics）</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-Dynamics的collide方法与BlockLatticeXD的collide方法"><span class="post-toc-text">3.1 Dynamics的collide方法与BlockLatticeXD的collide方法</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-数据处理器"><span class="post-toc-text">4 数据处理器</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-吐个槽"><span class="post-toc-text">5 吐个槽</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-学习笔记：Palabos（3）基本的数据类型" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习笔记：Palabos（3）基本的数据类型</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-21 15:02:01" datetime="2019-05-21T07:02:01.000Z" itemprop="datePublished">2019-05-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Palabos基本的数据类型，来自于<a href="http://www.palabos.org/documentation/userguide/data-types.html" target="_blank" rel="noopener">文档</a>的翻译。</p>
+<p>包含： BlockXD，格子描述符，Dynamic，数据处理器</p>
+<a id="more"></a>
+<p>上周末做汇报，其实材料已经准备好了，没有发上来。这个月要把圆柱扰流的代码搞定，还是任务艰巨。。。</p>
+<h1 id="1-BlockXD"><a href="#1-BlockXD" class="headerlink" title="1 BlockXD"></a>1 BlockXD</h1><p>BlockXD构造表示常规的2D或3D数组（或矩阵）数据，是保存变量的基本结构。关于BlockXD，在之前的文章中介绍了BlockLattice相关的类。但其实BlockXD的子类非常丰富。除了网格变量之外，还有标量张量等。下图是Block结构的继承图。可以看得很清楚。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/21/VSiplQ.gif" alt="Block结构的继承图" title>
+                </div>
+                <div class="image-caption">Block结构的继承图</div>
+            </figure>
+<p>由图可知，BlockXD派生出了两个大类，一个是<strong>AtomicBlockXD</strong>，一个是<strong>MultiBlockXD</strong>。而事实上，由BlockXD还派生出来了MultiGridXD，这一点可以从<a href="http://www.palabos.org/documentation/develguide/classplb_1_1Block2D.html" target="_blank" rel="noopener">开发文档</a>里看到。同时，还派生出了一些<strong>背景类</strong>（或者说是基类，如LatticeBaseXD等）。可以看到，所有类型为“block-lattice”的块都有一个方法collideAndStream（），无论它们是作为multi-block还是atomic-block实现，这个collideAndStream()方法执行格子的碰撞和迁移。 同样，所有multi-block都有一个方法getComponent（），无论它们是block-lattice, scalar-field, 还是tensor-field。</p>
+<p>此图中显示的情况称为“<strong>多重继承</strong>”，因为最终用户类以两种方式从BlockXD继承：其一是通过<strong>两大类</strong>atomic-block和multi-block路径，其二是<strong>背景类</strong>，即通过LatticeBaseXD，ScalarFieldBaseXD，TensorFieldBaseXD而来。比如BlockLattice2D这个类，就集成自BlockLatticeBase2D和AtomicBlock2D，而AtomicBlock2D又集成自Block2D。如下图：</p>
+<p><img src="https://s2.ax1x.com/2019/05/21/VSiyh8.png" alt="BlockLattice2Ｄ"></p>
+<p>可见，BlockXD提供了一切关于求解域，求解域的变量存储等相关的类，并且值得注意的是，其中，BlockLattice这些类具有collide和stream函数，来执行参数的推演。是BlockXD里面最为复杂和重要的类。</p>
+<h1 id="2-格子描述子"><a href="#2-格子描述子" class="headerlink" title="2  格子描述子"></a>2  格子描述子</h1><p>所有BlockXD构造都根据底层数据类型进行模板化。比如下面的代码：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Construct a 100x100 scalar-field with double-precision floating point values.</span></span><br><span class="line"></span><br><span class="line">MultiScalarField2D<<span class="keyword">double</span>> a(<span class="number">100</span>,<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Construct a 100x100 scalar-field with single-precision floating point values.</span></span><br><span class="line"></span><br><span class="line">MultiScalarField2D<<span class="keyword">float</span>> b(<span class="number">100</span>,<span class="number">100</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>但是对于block-lattice来说，<strong>格子还具有其他的模板参数，其中最为重要的是格子描述符</strong>，其指定格子的一些拓扑性质（粒子群的数量，离散速度，方向的权重和其他格子常数）。因此，很容易在应用程序中尝试不同的格子：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Construct a 100x100 block-lattice using the D3Q19 structure.</span></span><br><span class="line"></span><br><span class="line">MultiBlockLattice2D<<span class="keyword">double</span>, D3Q19Descriptor> lattice1(<span class="number">100</span>,<span class="number">100</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Construct a 100x100 block-lattice using the D3Q27 structure.</span></span><br><span class="line"></span><br><span class="line">MultiBlockLattice2D<<span class="keyword">double</span>, D3Q27Descriptor> lattice2(<span class="number">100</span>,<span class="number">100</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>文档中写道：编写新的网格描述符也很容易（目前没有记录，但你可以查看目录src / latticeBoltzmann / nearestNeighborLattices2D.h中的文件，看看它是如何工作的）。 这非常有用，因为这意味着当您切换到新类型的晶格时，不需要重新编写用于实现BlockLatticeXD的冗长代码部分。 这个论点是Palabos非侵入式程序开发部分中描述的一般概念的一部分。最近邻2D格的描述符。 原则上，由于代码的静态通用性，格子的定义和动态的实现是独立的。 当然，有特例。 例如，使用诸如热通量的高阶矩的动力学需要具有扩展邻域的格子。 另一个例子是D3Q13格子，它只能用它自己的动力学。</p>
+<p>不难看出，邻近2D网格描述符（nearestNeighborLattices2D）是通常使用的网格描述符。我顺便查了查<a href="http://www.palabos.org/documentation/develguide/nearestNeighborLattices2D_8h_source.html" target="_blank" rel="noopener">nearestNeighborLattices2D</a>这个文件，发现其下面包含了常见的网格描述符：D2Q9Constants、D2Q9DescriptorBase、D2Q9Descriptor、ForcedD2Q9Descriptor等。基本上常见的2D格子描述符都在这里面，其中D2Q9Constants作为父结构体而存在。其中包含了成员变量，里面大部分都是静态的成员变量，没有看到方法。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/21/VSkesJ.png" alt="D2Q9Descriptor" title>
+                </div>
+                <div class="image-caption">D2Q9Descriptor</div>
+            </figure>
+<p>如图是D2Q9描述符的成员变量，可以看到，都是D2Q9的一些固有属性的变量。因此，如果需要开发新的描述符的话，完全可以在此基础上继承。</p>
+<p>不过值得注意的是，网格描述符属于结构体模板，并非类模板。</p>
+<h1 id="3-动态类（Dynamics）"><a href="#3-动态类（Dynamics）" class="headerlink" title="3 动态类（Dynamics）"></a>3 动态类（Dynamics）</h1><p>动态类代表了采用的LBM模型。比如是LBGK模型还是MRT模型，或者是包含外力的Guo格式模型。</p>
+<p>不同的模型采用不同的平衡态分布函数，乃至离散方式。而动态类Dynamic就是</p>
+<ul>
+<li>以下大部分来自于<a href="http://www.palabos.org/documentation/userguide/data-types.html" target="_blank" rel="noopener">文档</a>的翻译：</li>
+</ul>
+<p>在格子Boltzmann模拟的时间迭代期间，block-lattice的所有单元执行局部碰撞步骤，然后执行扩散步骤。扩散步骤是固定的，并且只能通过定义网格描述符中（比如D2Q9Descriptor）的离散速度来影响。然而，碰撞步骤可以完全定制，并且可以实现在不同的单元上执行不同的碰撞方式。通过这种方式，可以在局部调整在网格上模拟的物理特性，并且诸如边界的特定区域可以得到单独的处理。</p>
+<p>由于上述目的，比如说要针对不同的边界条件或动力学类型（Dynamics）来执行不同的碰撞模型。那么需要<strong>在网格的每个单元保持一个指向Dynamics类型的对象的指针</strong>。<strong>这个对象提供了碰撞步骤的实现。此外，它还提供了计算宏观变量以及更多有关模型的信息的方法</strong>。除了模拟的变量之外，block-lattice的单元格还包含指向Dynamics类型的对象的指针。 该对象最提供了冲突步骤的实现。 此外，它还提供了一种计算宏观变量的方法，用于在不同大小的网格之间重新调整变量的信息，以及更多与模型相关的信息。因此，在Dynamics类中声明的方法列表很长，从这个类继承它似乎很乏味。出于这个原因，Palabos提供了一系列继承自Dynamics的类，其中许多方法是为特定目的预定义的。 因此，定义新的动态类本质上包括在继承层次结构中选择正确的位置，然后重写两个或三个方法。 为了便于说明，此继承图的一部分如下图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/21/VSnjDU.gif" alt="Dynamic继承图" title>
+                </div>
+                <div class="image-caption">Dynamic继承图</div>
+            </figure>
+<p>Palabos提供了一系列继承自Dynamics的类，其中许多方法是为特定目的预定义的。要学习如何定义新的动力学类，最简单的方法是查看Palabos中定义的一个类。例如，BGK动态定义在文件src / basicDynamics / isoThermalDynamics.hh中。复合动力学（一个修改另一个现有动力学类的行为的类）的一个很好的例子是Smagorinsky动力学，在src / complexDynamics / smagorinskyDynamics.hh中定义。</p>
+<p>简单看了看<a href="http://www.palabos.org/documentation/develguide/isoThermalDynamics_8hh_source.html" target="_blank" rel="noopener">isoThermalDynamics</a>的代码，<strong>发现在里面实现了很多动态类的成员方法，比如碰撞，计算宏观变量等</strong>。</p>
+<p>对于碰撞的实现，<strong>动态对象获得对单个单元的引用</strong>，因此，碰撞步骤必然是局部的。模拟的非局部成分用<strong>数据处理器</strong>实现，如下一节所示。</p>
+<p>与block-lattice一样，动态对象依赖于两个模板参数，一个浮点参数，一个是网格描述符。通过使用格子描述符中提供的信息，碰撞步骤应以通用的，与网格无关的方式编写。在以通用方式编写算法时显然效率会打折扣，因此通过对给定晶格使用模板特化，可以避免此问题。例如，再次采用BGKdynamics类的实现。通用动态类的碰撞实现通过dynamicsTemplates实现，它在文件src / latticeBoltzmann / dynamicsTemplates.h中定义。然而，针对2D和3D的特殊情况，在文件dynamicsTemplates2D.h和dynamicsTemplates3D.h对碰撞的实现做了重写，这部分代码实现了高效化运行。</p>
+<h2 id="3-1-Dynamics的collide方法与BlockLatticeXD的collide方法"><a href="#3-1-Dynamics的collide方法与BlockLatticeXD的collide方法" class="headerlink" title="3.1 Dynamics的collide方法与BlockLatticeXD的collide方法"></a>3.1 Dynamics的collide方法与BlockLatticeXD的collide方法</h2><p>值得注意的是，在BlockLatticeXD中有了Collide和Stream这两个成员方法，而在Dynamic里面也有两个这样的成员方法。<strong>那么到底执行碰撞的是在BlockLatticeXD里面还是Dynamic里面</strong>？</p>
+<p>先看看BlockLatticeXD中的collide方法。</p>
+<p>BlockLatticeXD有两种形式，看其中一个，后面那个是前面的直接调用，所以看第一个：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span><<span class="keyword">typename</span> U> <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"> <span class="title">void</span> ‪<span class="title">BlockLattice2D</span><t,descriptor>:</t,descriptor></span>:collide(‪Box2D domain) {</span><br><span class="line">     ‪PLB_PRECONDITION( (‪plint)Descriptor<t>::q==(‪plint)Descriptor<t>::numPop );</t></t></span><br><span class="line">     <span class="comment">// Make sure domain is contained within current lattice</span></span><br><span class="line">     ‪PLB_PRECONDITION( ‪contained(domain, <span class="keyword">this</span>->getBoundingBox()) );</span><br><span class="line"> </span><br><span class="line">     <span class="keyword">for</span> (‪plint iX=domain.‪x0; iX<=domain.‪x1; ++ix) {< span><br><span class="line">         <span class="keyword">for</span> (‪plint iY=domain.‪y0; iY<=domain.‪y1; ++iy) {< span><br><span class="line">             grid[iX][iY].collide(<span class="keyword">this</span>->getInternalStatistics());</span><br><span class="line">             grid[iX][iY].revert();</span><br><span class="line">         }</span><br><span class="line">     }</span><br><span class="line"> }</span><br></=domain.‪y1;></span></=domain.‪x1;></span></pre></td></tr></tbody></table></figure>
+<p>其中PLB_PRECONDITION是一个判断语句，括号里面的为真则继续往下执行，为假则报错。</p>
+<p>问题的关键在于循环里面的：“<code>grid[iX][iY].collide(this->getInternalStatistics());</code>”这一句。这一句调用了一个collide函数，而grid[iX][iY]是个什么的东西呢？</p>
+<p>它的定义是：</p>
+<figure class="highlight plain"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cell< T, Descriptor > ** grid</span><br></pre></td></tr></tbody></table></figure>
+<p>可见，<strong>grid是一个二维数组，其里面存储的是Cell的对象</strong>。所以上一个语句调用的是Cell类里面的成员函数collide。</p>
+<p>那么<a href="http://palabos.asce.top/classplb_1_1_cell.html" target="_blank" rel="noopener">Cell</a>里面的collide是这样的：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">void</span> ‪collide(‪BlockStatistics& statistics) {</span><br><span class="line">         ‪PLB_PRECONDITION( ‪dynamics );</span><br><span class="line">         ‪dynamics->collide(*<span class="keyword">this</span>, statistics);</span><br><span class="line">     }</span><br></pre></td></tr></tbody></table></figure>
+<p>可以看到里面其实调用的是dynamic里面的collide方法。这样就比较清楚了，<strong>BlockLatticeXD里面调用的是对整块格子域进行碰撞操作，而dynamic提供的是具体的方法</strong>，也就是每个格子进行碰撞的时候都要调用dynamic里面的这个collide方法。</p>
+<p>再来看看dynamic里面的collide方法：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span><<span class="keyword">typename</span> U> <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">void</span> ‪<span class="title">BGKdynamics</span><t,descriptor>:</t,descriptor></span>:collide (</span><br><span class="line">         ‪Cell<t,descriptor>& cell,</t,descriptor></span><br><span class="line">         ‪BlockStatistics& statistics )</span><br><span class="line"> {</span><br><span class="line">     T rhoBar;</span><br><span class="line">     ‪Array<t,descriptor<t>::d> j;</t,descriptor<t></span><br><span class="line">     ‪momentTemplates<t,descriptor>::get_rhoBar_j(cell, rhoBar, j);</t,descriptor></span><br><span class="line">     T uSqr = ‪dynamicsTemplates<t,descriptor>::bgk_ma2_collision(cell, rhoBar, j, <span class="keyword">this</span>->getOmega());</t,descriptor></span><br><span class="line">     <span class="keyword">if</span> (cell.‪takesStatistics()) {</span><br><span class="line">         ‪gatherStatistics(statistics, rhoBar, uSqr);</span><br><span class="line">     }</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+<p>形参里面包括了一个Cell的引用，这说明调用这个方法会改变Cell里面数值。Cell这个类里面最为关键的成员变量就是分布函数f和动态指针dynamics。</p>
+<p>第一句对密度进行了声明，第二局声明了一个Array，数组容器。由于“T”代表的是“double”，Descriptor<t>::d是描述子的维度，如果是D2Q9，那么这个Descriptor<t>::d就等于2。所以j就是一个包含两个元素的数组。</t></t></p>
+<p>第三句调用了一个函数，从函数名可以看到是得到rhoBar_j，看了代码以后，我知道这个东西是代表的是什么，但是我依旧不清楚这个有什么用。</p>
+<p>假设采用的是D2Q9描述符，并且其离散速度如下图所示（Palabos里面的D2Q9的速度分布就是这样的）：</p>
+<p><img src="https://s2.ax1x.com/2019/05/21/VpiDI0.png" alt="D2Q9"></p>
+<p>其中:</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">lineX_P1  = f[<span class="number">5</span>] + f[<span class="number">6</span>] + f[<span class="number">7</span>];</span><br><span class="line">lineX_0   = f[<span class="number">0</span>] + f[<span class="number">4</span>] + f[<span class="number">8</span>];</span><br><span class="line">lineX_M1  = f[<span class="number">1</span>] + f[<span class="number">2</span>] + f[<span class="number">3</span>];</span><br><span class="line"> </span><br><span class="line">lineY_P1  = f[<span class="number">7</span>] + f[<span class="number">8</span>] + f[<span class="number">1</span>];</span><br><span class="line">lineY_M1  = f[<span class="number">3</span>] + f[<span class="number">4</span>] + f[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line">rhoBar = lineX_P1 + lineX_0 + lineX_M1;</span><br><span class="line">j[<span class="number">0</span>] = (lineX_P1 - lineX_M1);</span><br><span class="line">j[<span class="number">1</span>] = (lineY_P1 - lineY_M1);</span><br></pre></td></tr></tbody></table></figure>
+<p>j就是这么个东西了，但是我还不知道它用来干啥的。</p>
+<p>第四句，也就是最核心的部分，就是执行碰撞了。可以看到，他这里调用dynamicsTemplates类下的bgk_ma2_collision方法。</p>
+<p>bgk_ma2_collision碰撞代码如下:</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> T ‪bgk_ma2_collision(‪Cell<t,descriptor>& cell, T rhoBar, ‪Array<t,descriptor<t>::d> <span class="keyword">const</span>& j, T omega)</t,descriptor<t></t,descriptor></span><br><span class="line"> {</span><br><span class="line">     <span class="keyword">return</span> ‪dynamicsTemplatesImpl<t,<span class="keyword">typename</t,<span></span> Descriptor<t>::BaseDescriptor><br><span class="line">         ‪::bgk_ma2_collision(cell.‪getRawPopulations(), rhoBar, j, omega);</span><br><span class="line"> }</span><br></t></pre></td></tr></tbody></table></figure>
+<p>其调用了dynamicsTemplatesImpl类下面的bgk_ma2_collision。而这个函数具体为：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> T ‪bgk_ma2_collision(‪Array<t,descriptor::q>& f, T rhoBar, ‪Array<t,descriptor::d> <span class="keyword">const</span>& j, T omega) {</t,descriptor::d></t,descriptor::q></span><br><span class="line">     T invRho = Descriptor::invRho(rhoBar);</span><br><span class="line">     <span class="keyword">const</span> T jSqr = ‪VectorTemplateImpl<t,descriptor::d>::normSqr(j);</t,descriptor::d></span><br><span class="line">     <span class="keyword">for</span> (‪plint iPop=<span class="number">0</span>; iPop < Descriptor::q; ++iPop) {</span><br><span class="line">         f[iPop] *= (T)<span class="number">1</span>-omega;</span><br><span class="line">         f[iPop] += omega * ‪dynamicsTemplatesImpl<t,descriptor>::bgk_ma2_equilibrium (</t,descriptor></span><br><span class="line">                                 iPop, rhoBar, invRho, j, jSqr );</span><br><span class="line">     }</span><br><span class="line">     <span class="keyword">return</span> jSqr*invRho*invRho;</span><br><span class="line"> }</span><br></pre></td></tr></tbody></table></figure>
+<p>第一句定义了一个invRho，查了一下<a href="http://palabos.asce.top/structplb_1_1_default_round_off_policy.html#ad619e46e98f61e2f67684470244fdb19" target="_blank" rel="noopener">文档</a>，发现其是一个这样的东西：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> T ‪invRho(T ‪rhoBar) {</span><br><span class="line">         <span class="keyword">return</span> (T)<span class="number">1</span> / (‪rhoBar + (T)<span class="number">1</span>);</span><br><span class="line">     }</span><br></pre></td></tr></tbody></table></figure>
+<p>后面的可以看出来，也不宜过于深究了。其碰撞公式就是：</p>
+<p>$f_{k}(x+\Delta x, t+\Delta t)=f_{k}(x, t)[1-\omega]+\omega f_{k}^{\mathrm{eq}}(x, t)$</p>
+<p>绕的有点多了。</p>
+<h1 id="4-数据处理器"><a href="#4-数据处理器" class="headerlink" title="4 数据处理器"></a>4 数据处理器</h1><p>我认为这个部分是比较复杂的，原因是我在看后面的边界条件的时候，根据不同的边界条件大量的应用了数据处理器。单看用户文档还是无法完全了解。目前先按照用户文档的内容记录。</p>
+<p>以下主要来自<a href="http://www.palabos.org/documentation/userguide/data-types.html#data-processors" target="_blank" rel="noopener">文档</a>翻译。</p>
+<p>数据处理器作用在整个求解域，或者是某个块（block）。在block-lattice中，他们用来实现所有无法通过动态类（Dynamic)实现的数据处理操作。这些操作主要是那些<strong>非局部操作</strong>，比如用于实现边界条件的有限差分模板的评估。在标量场和张量场中，数据处理器提供了在空间扩展域上执行操作的唯一（足够有效且可并行化）的方式。</p>
+<p>此外，数据处理器能够在几个相同类型或不同类型的块之间交换信息（例如：块格和标量场之间的耦合）。这通常用于实现物理耦合（多组分流体，具有Boussinesq近似的热流体），初始条件的设置（从矢量场中的值初始化速度），或执行经典基于数组的操作（以元素方式添加两个标量字段）。</p>
+<p>最后，数据处理器用于在整个块或子域上执行缩减操作。示例的范围从计算平均动能到计算作用在障碍物上的阻力。</p>
+<p>数据处理器的定义和应用采用了两种不同的观点。在<strong>应用程序级别</strong>，用户指定给定块的区域（可以是矩形或不规则的），在该区域上执行数据处理器。如果块内部具有多块结构，则数据处理器被细分为几个更具体的数据处理器，各自负责atomic-block的数据处理。因此，<strong>在执行级别</strong>，数据处理器总是作用于atomic-block，即作用于先前通过将原始区域与原子块的域相交来确定的区域。</p>
+<p>最后，定义新的数据处理器非常容易。您需要做的就是编写一个函数，该函数接收atomic-block和sub-domain的坐标作为参数，并在该子域上执行算法。所有复杂的操作，例如存在多块的操作的细分，或代码的并行化，都是自动的。</p>
+<p>目前看起来比较头大，有很多东西现阶段不是很理解。不过好在用户文档里面也提到了：Palabos通过所谓的数据处理功能提供简化的界面，隐藏技术细节并让您专注于基本部分。<strong>也就是说知道怎么用就行了</strong>。看看，可能传递的就是一个atomi-block和一个sub-domain的坐标。然后指定一些palabos已经替我们处理好的算法。</p>
+<p>文档提到，可以在文件\src\dataProcessors\ latticeInitializerXD.h和.hh中找到更多关于块格的数据处理器的定义，并且在文件\src\dataProcessors\dataFieldInitializerXD中定义作用于标量或张量字段的数据处理器。减少操作的评估示例在文件\src\dataProcessors\dataAnalysisXD.h和.hh中提供。</p>
+<p><strong>实际文档中给出的地址路径不对，且latticeInitializerXD查找不到</strong>。究其原因，就是因为palabos官方的文档是1.1的，而我下下来的代码是2.0的。</p>
+<p>因此我才用doxygen生成了2.0的开发文档。不得不说用起来非常的方便，查找功能很好。再次安利<a href="http://palabos.asce.top/" target="_blank" rel="noopener">Palabos的2.0版开发文档</a>，如果能对研究Palabos的伙伴产生作用，那是再好不过了。</p>
+<h1 id="5-吐个槽"><a href="#5-吐个槽" class="headerlink" title="5 吐个槽"></a>5 吐个槽</h1><p>暂时写到这里，有点晚了，本来以为一两个小时可以搞定，没想到从下午写到了晚上。主要就是在研究collide函数花了比较多的时间。</p>
+<p>如果只是想要初步的了解，不建议挖的过深。</p>
+<p>我就是有时候挖到底层了，让后让自己迷失在代码里，抓不住重点。这是阅读代码所不应该的地方。</p>
+<p>以后还是要注意一下，<strong>避免陷入代码海洋，而只见树木不见森林。</strong></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-22T01:40:42.199Z" itemprop="dateUpdated">2019-05-22 09:40:42</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Palabos/">Palabos</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/cb4fe6c1.html&title=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/cb4fe6c1.html&title=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&source=Palabos基本的数据类型，来自于文档的翻译。
+包含： BlockXD，格子描述符，Dynamic，数据处理器" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/cb4fe6c1.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&url=hxblog.top/post/cb4fe6c1.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/cb4fe6c1.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/cd85bfda.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">欢迎加入本博客交流群</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/7d334df7.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">Palabos代码文档V2.0</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/cb4fe6c1.html&title=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/cb4fe6c1.html&title=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&source=Palabos基本的数据类型，来自于文档的翻译。
+包含： BlockXD，格子描述符，Dynamic，数据处理器" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/cb4fe6c1.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（3）基本的数据类型》 — 时光之笔&url=hxblog.top/post/cb4fe6c1.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/cb4fe6c1.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/cb4fe6c1.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

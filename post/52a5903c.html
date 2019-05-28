@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习笔记：Palabos（2）快速编程 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Plababos">
+    <meta name="description" content="本文内容对应官网文档。 主要内容是：  基本类型； 内存管理； 数组类型； 速度和密度； 并行化； 非侵入式编程。">
+<meta name="keywords" content="Plababos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记：Palabos（2）快速编程">
+<meta property="og:url" content="hxblog.top/post/52a5903c.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="本文内容对应官网文档。 主要内容是：  基本类型； 内存管理； 数组类型； 速度和密度； 并行化； 非侵入式编程。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-08T12:13:02.530Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习笔记：Palabos（2）快速编程">
+<meta name="twitter:description" content="本文内容对应官网文档。 主要内容是：  基本类型； 内存管理； 数组类型； 速度和密度； 并行化； 非侵入式编程。">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习笔记：Palabos（2）快速编程</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习笔记：Palabos（2）快速编程</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-08T11:49:34.000Z" itemprop="datePublished" class="page-time">
+  2019-05-08
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-基本数据类型"><span class="post-toc-text">1 基本数据类型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-内存管理"><span class="post-toc-text">2 内存管理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-数组数据类型"><span class="post-toc-text">3 数组数据类型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-速度和密度"><span class="post-toc-text">4 速度和密度</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-并行化"><span class="post-toc-text">5 并行化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-非侵入式编程"><span class="post-toc-text">6 非侵入式编程</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-1-关于编程的一些提醒"><span class="post-toc-text">6.1 关于编程的一些提醒</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#6-2-可拓展的部分"><span class="post-toc-text">6.2 可拓展的部分</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-学习笔记：Palabos（2）快速编程" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习笔记：Palabos（2）快速编程</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-08 19:49:34" datetime="2019-05-08T11:49:34.000Z" itemprop="datePublished">2019-05-08</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>本文内容对应<a href="http://www.palabos.org/documentation/userguide/programming.html" target="_blank" rel="noopener">官网文档</a>。</p>
+<p>主要内容是：</p>
+<ul>
+<li>基本类型；</li>
+<li>内存管理；</li>
+<li>数组类型；</li>
+<li>速度和密度；</li>
+<li>并行化；</li>
+<li>非侵入式编程。</li>
+</ul>
+<a id="more"></a>
+<h1 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1 基本数据类型"></a>1 基本数据类型</h1><p>考虑到兼容性问题，有符号和无符号整数数据类型<strong>int和unsigned int被plint和pluint系统地替换</strong>。</p>
+<p>考虑到并行性的问题，采用缓冲区<strong>pcout来替换cout作为输出</strong>。</p>
+<h1 id="2-内存管理"><a href="#2-内存管理" class="headerlink" title="2 内存管理"></a>2 内存管理</h1><p>Palabos采用的内存管理机制是这样的。简单来说，<strong>就是谁用谁管</strong>。当你把一个指针作为函数变量给函数的时候，你不需要考虑删除指针这件事。你甚至不能对其再做任何处理，因为这个时候，这个指针是函数在用。</p>
+<p>相反，当你获得从一个函数返回的指针时，你需要对这个指针进行负责，内存释放也由你来处理。</p>
+<p>文档中这样说道：关于谁删除许多实例指向的对象的问题通常通过每个对象的一个指针方法在Palabos中避免。也就是说，每个对象只有一个指针。每当第二个实例需要访问之前的对象时，采用的是克隆，而不是直接把指针指向之前的对象。比如：</p>
+<figure class="highlight ceylon"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A* <span class="keyword">object</span><span class="number">1</span> = <span class="keyword">new</span> A;</span><br><span class="line">A* <span class="keyword">object</span><span class="number">2</span> = <span class="keyword">object</span><span class="number">1</span>->clone();</span><br></pre></td></tr></tbody></table></figure>
+<p>因此，<strong>每个类都会要有一个克隆的方法需要实现</strong>。克隆方法都采用相同的形式：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">A* A::clone() <span class="keyword">const</span> {</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">new</span> A(*<span class="keyword">this</span>);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>所以，当你创建或者继承一个类的时候，需要实现这个克隆的方法。我想这也应该是针对一些BlockXD或者Dynamic这种类型的类吧。</p>
+<h1 id="3-数组数据类型"><a href="#3-数组数据类型" class="headerlink" title="3 数组数据类型"></a>3 数组数据类型</h1><p>大型的数据，比如格子数据采用BlockLattice这种类型，这是palabos里面的专门的数据类型，具有很好的并行性。</p>
+<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Instantiate a nx*ny*nz D3Q19 lattice with double-precision</span><br><span class="line">// floating point numbers.</span><br><span class="line">MultiBlockLattice<double,d3q19descriptor> lattice(nx,ny,nz);</double,d3q19descriptor></span><br><span class="line"></span><br><span class="line">// Instantiate a nx*ny*nz matrix of<span class="built_in"> double-precision </span>floating</span><br><span class="line">// point scalars.</span><br><span class="line">MultiScalarField<double> field(nx,ny,nz);</double></span><br></pre></td></tr></tbody></table></figure>
+<p>第一个代码的作用是<strong>对多块网格对象（MultiBlockLattice）的实例化</strong>。采用双精度，D3Q19描述子的模板化实例。第二个是多标量场（MultiScalarField）的实例化。</p>
+<p>较小型的数据采用C++的标准模板库中的容器来创建。比如向量：vector或者array：</p>
+<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plint numspecies = 5;</span><br><span class="line">// Instantiate a vector of<span class="built_in"> double-precision </span>floating point</span><br><span class="line">// numbers with 5 elements.</span><br><span class="line">vector<double> viscosities(numSpecies);</double></span><br><span class="line">viscosities[3] = 0.63;</span><br></pre></td></tr></tbody></table></figure>
+<p>定义了一个长度为5的向量，对第四个赋值为0.63。</p>
+<p>对于固定大小的数据，还可以采用数组：array：</p>
+<figure class="highlight smali"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Instantiate a fixed-size<span class="built_in"> array </span>of type<span class="built_in"> double </span>and with</span><br><span class="line">// 3 elements. The values can be initialized directly in</span><br><span class="line">// the<span class="keyword"> constructor</span> for arrays of size 2<span class="built_in"> and </span>3.</span><br><span class="line">Array<double,3> velocity(0., 0., 0.5);</double,3></span><br><span class="line">velocity[0] = 0.1;</span><br></pre></td></tr></tbody></table></figure>
+<p>定义了一个速度向量，然后对速度向量中的第一个分量赋值为0.1。</p>
+<h1 id="4-速度和密度"><a href="#4-速度和密度" class="headerlink" title="4 速度和密度"></a>4 速度和密度</h1><p>文档中讲的比较清楚，以下为简单翻译结果。</p>
+<p>在palabos里面很少采用rho和u这样的变量，<strong>通常采用rhoBar和j来代替</strong>。变量j是一阶速度矩，对于大多数模型，它与流体动量相同：j = rho * u。另一方面，变量rhoBar的定义可以定制。 默认情况下，它定义为rhoBar = rho-1，用于提高方法的数值精度。实际上，由于密度通常接近于1，因此通过表示在0而不是1附近波动的数量，您可以获得浮点变量表示中的有效数字。</p>
+<p>在不详细介绍的情况下，这里有一些在rho / u和rhoBar / j表示之间切换的规则：</p>
+<figure class="highlight mizar"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// Use custom <span class="keyword">definitions</span> <span class="keyword">in</span> lattice descriptor to compute rho <span class="keyword">from</span> rhoBar</span><br><span class="line">rho = Descriptor<t><span class="comment">::fullRho(rhoBar);</span></t></span><br><span class="line"></span><br><span class="line">// Use custom <span class="keyword">definitions</span> <span class="keyword">in</span> lattice descriptor to compute rhoBar <span class="keyword">from</span> rho</span><br><span class="line">rhoBar = Descriptor<t><span class="comment">::rhoBar(rho);</span></t></span><br><span class="line"></span><br><span class="line">// Momentum <span class="keyword">is</span> equal to density times velocity (component-wise)</span><br><span class="line">j[iD] = rho * u[iD];</span><br><span class="line"></span><br><span class="line">// Velocity <span class="keyword">is</span> equal to inverse-density times momentum (component-wise)</span><br><span class="line">u[iD] = 1./rho * j[iD];</span><br><span class="line"></span><br><span class="line">// Inverse-density can <span class="keyword">be</span> computed right away <span class="keyword">from</span> rhoBar. Depending on</span><br><span class="line">// the custom <span class="keyword">definitions</span> <span class="keyword">in</span> the descriptor, this <span class="keyword">is</span> substantially more</span><br><span class="line">// efficient than computing 1./rho, because the Taylor expansion <span class="keyword">of</span> the</span><br><span class="line">// inverse-function <span class="keyword">is</span> truncated at an appropriate position.</span><br><span class="line">u[iD] = Descriptor<t><span class="comment">::invRho(rhoBar) * j[iD];</span></t></span><br></pre></td></tr></tbody></table></figure>
+<p>简单的理解，就是好对于这些类，其都定义了一个转换方法，用于实现这两个物理量的转换。但是在实际的应用中，很显然采用rhobar的精度会高一些，同时用j代替速度u会显得更简洁。<strong>考虑到是精度和便携性。</strong></p>
+<h1 id="5-并行化"><a href="#5-并行化" class="headerlink" title="5 并行化"></a>5 并行化</h1><p>Palabos的分布式对象（MultiBlockLattice，MultiScalarField和MultiTensorField）是并行化的，也就是针对特定的对象并行才能实施。关于这一块后续再补充。</p>
+<h1 id="6-非侵入式编程"><a href="#6-非侵入式编程" class="headerlink" title="6 非侵入式编程"></a>6 非侵入式编程</h1><h2 id="6-1-关于编程的一些提醒"><a href="#6-1-关于编程的一些提醒" class="headerlink" title="6.1 关于编程的一些提醒"></a>6.1 关于编程的一些提醒</h2><ul>
+<li><strong>不要直接修改palabos的核心代码</strong></li>
+<li><strong>采用拓展或者继承的方式来实现新的模型和方法</strong></li>
+</ul>
+<p>比如要实现一个与BGK类似的模型，则不应该直接修改src / basicDynamics / isothermalDynamics.h和.hh，而是应该新建两个文件：myNewModel.h和myNewModel.hh，其中包含一个继承自IsoThermalBulkDynamics的类MyNewDynamics，并定义与BGKdynamics相同的三种方法：clone（），collide（）和computeEquilibrium（）。这两个文件可以存放在任意目录。只需要确保在编译的时候能找到他。</p>
+<p>这个应该大部分都是这样。</p>
+<h2 id="6-2-可拓展的部分"><a href="#6-2-可拓展的部分" class="headerlink" title="6.2 可拓展的部分"></a>6.2 可拓展的部分</h2><p>在palabos中，可以拓展的部分包含：</p>
+<ul>
+<li><strong>编写新的动态类</strong></li>
+<li><strong>编写新的数据处理器</strong></li>
+<li><strong>编写新的晶格描述符</strong></li>
+</ul>
+<p><strong>动态类用于定义新的局部碰撞步骤，而新的晶格描述符意味着新的晶格拓扑（离散速度，权重等），数据处理器用于其他所有事物</strong>。</p>
+<p>暂时这么多，基本上是消化官方文档。</p>
+<p>下一节继续Palabos的基本数据结构。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-08T12:13:02.530Z" itemprop="dateUpdated">2019-05-08 20:13:02</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Plababos/">Plababos</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/52a5903c.html&title=《学习笔记：Palabos（2）快速编程》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/52a5903c.html&title=《学习笔记：Palabos（2）快速编程》 — 时光之笔&source=本文内容对应官网文档。
+主要内容是：
+
+基本类型；
+内存管理；
+数组类型；
+速度和密度；
+并行化；
+非侵入式编程。
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/52a5903c.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（2）快速编程》 — 时光之笔&url=hxblog.top/post/52a5903c.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/52a5903c.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/d9455392.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">TG开启本地代理的方法</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/7ad67490.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">学习笔记：Palabos（1）格子离散化和动态行为</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/52a5903c.html&title=《学习笔记：Palabos（2）快速编程》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/52a5903c.html&title=《学习笔记：Palabos（2）快速编程》 — 时光之笔&source=本文内容对应官网文档。
+主要内容是：
+
+基本类型；
+内存管理；
+数组类型；
+速度和密度；
+并行化；
+非侵入式编程。
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/52a5903c.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（2）快速编程》 — 时光之笔&url=hxblog.top/post/52a5903c.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/52a5903c.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/52a5903c.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

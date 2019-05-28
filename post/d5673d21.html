@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Maple学习笔记 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Maple">
+    <meta name="description" content="最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。">
+<meta name="keywords" content="Maple">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maple学习笔记">
+<meta property="og:url" content="hxblog.top/post/d5673d21.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="/post/d5673d21/补全字符.png">
+<meta property="og:image" content="/post/d5673d21/希娜字符输入表.png">
+<meta property="og:image" content="/post/d5673d21/多图绘制.png">
+<meta property="og:updated_time" content="2019-03-30T08:19:04.119Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Maple学习笔记">
+<meta name="twitter:description" content="最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。">
+<meta name="twitter:image" content="/post/d5673d21/补全字符.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Maple学习笔记</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Maple学习笔记</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-10-16T15:53:46.000Z" itemprop="datePublished" class="page-time">
+  2018-10-16
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-输入相关"><span class="post-toc-text">1 输入相关</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-乘法"><span class="post-toc-text">1.1 乘法</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-输入表达式"><span class="post-toc-text">1.2 输入表达式</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-补全输入"><span class="post-toc-text">1.3 补全输入</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-4-输入公式标签"><span class="post-toc-text">1.4 输入公式标签</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-5-关于赋值"><span class="post-toc-text">1.5 关于赋值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-6-插入空语句"><span class="post-toc-text">1.6 插入空语句</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-7-数学和文字的区别"><span class="post-toc-text">1.7 数学和文字的区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-8-输入下标"><span class="post-toc-text">1.8 输入下标</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-9-输入指数"><span class="post-toc-text">1.9 输入指数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-10-输入希腊字母"><span class="post-toc-text">1.10 输入希腊字母</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-绘图"><span class="post-toc-text">2 绘图</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1-调用格式："><span class="post-toc-text">2.1 调用格式：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2-颜色："><span class="post-toc-text">2.2 颜色：</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3-线型"><span class="post-toc-text">2.3 线型</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-4-坐标轴名称及图表名称"><span class="post-toc-text">2.4 坐标轴名称及图表名称</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-5-字体控制"><span class="post-toc-text">2.5 字体控制</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-6-坐标轴选项"><span class="post-toc-text">2.6 坐标轴选项</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-7-绘制多个图形"><span class="post-toc-text">2.7 绘制多个图形</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-7-1-利用display"><span class="post-toc-text">2.7.1 利用display</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-7-2-利用一个plot绘制出两个图"><span class="post-toc-text">2.7.2 利用一个plot绘制出两个图</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-7-3"><span class="post-toc-text">2.7.3</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-8-图例"><span class="post-toc-text">2.8 图例</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Maple学习笔记" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Maple学习笔记</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-10-16 23:53:46" datetime="2018-10-16T15:53:46.000Z" itemprop="datePublished">2018-10-16</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。</p>
+<a id="more"></a>
+<h1 id="1-输入相关"><a href="#1-输入相关" class="headerlink" title="1 输入相关"></a>1 输入相关</h1><h2 id="1-1-乘法"><a href="#1-1-乘法" class="headerlink" title="1.1 乘法"></a>1.1 乘法</h2><ul>
+<li>空格号以为着隐式乘号</li>
+<li>在很多字符的情况下，或者含有表达式的情况下，使用显示乘法更能防止出错</li>
+</ul>
+<pre><code>x y=x*y
+xy:定义了一个“xy”的变量
+</code></pre><h2 id="1-2-输入表达式"><a href="#1-2-输入表达式" class="headerlink" title="1.2 输入表达式"></a>1.2 输入表达式</h2><ul>
+<li>可以在面板中选择表达式，用tab键转移到下一个占位符进行输入</li>
+<li>不用再拿鼠标移动到那一点去输入</li>
+</ul>
+<h2 id="1-3-补全输入"><a href="#1-3-补全输入" class="headerlink" title="1.3 补全输入"></a>1.3 补全输入</h2><ul>
+<li>和其他的语言一样，输入首个字母可以自动补全剩下的</li>
+<li>输入首几个字符后，可以按回车键直接输入提示的字符</li>
+<li>按下ESC键弹出下拉供选择的补全方案</li>
+<li>除了补全已有的变量之外，还可以补全字符</li>
+</ul>
+<img src="/post/d5673d21/补全字符.png">
+<h2 id="1-4-输入公式标签"><a href="#1-4-输入公式标签" class="headerlink" title="1.4 输入公式标签"></a>1.4 输入公式标签</h2><ul>
+<li>Ctrl+L会弹出插入公式标签的对话框，在对话框中输入公式编号即可</li>
+</ul>
+<h2 id="1-5-关于赋值"><a href="#1-5-关于赋值" class="headerlink" title="1.5 关于赋值"></a>1.5 关于赋值</h2><ul>
+<li>赋值语句“:=”，冒号不能少，否则变成等式</li>
+<li>要让语句执行不输出，在语句后面添加冒号“：”</li>
+</ul>
+<h2 id="1-6-插入空语句"><a href="#1-6-插入空语句" class="headerlink" title="1.6 插入空语句"></a>1.6 插入空语句</h2><ul>
+<li>按住shift后再回车。否则直接执行当前命令。</li>
+</ul>
+<h2 id="1-7-数学和文字的区别"><a href="#1-7-数学和文字的区别" class="headerlink" title="1.7 数学和文字的区别"></a>1.7 数学和文字的区别</h2><ul>
+<li>按住Ctrl和T，可以切换为文字输入</li>
+<li>数学下的东西可以执行，文字环境下的东西不能执行，可以作为注释</li>
+<li>数学下的光标为斜体，文字环境下的为直立</li>
+</ul>
+<h2 id="1-8-输入下标"><a href="#1-8-输入下标" class="headerlink" title="1.8 输入下标"></a>1.8 输入下标</h2><ul>
+<li>Ctrl+Shift+“_”：Ctrl+Shift+下划线</li>
+</ul>
+<h2 id="1-9-输入指数"><a href="#1-9-输入指数" class="headerlink" title="1.9 输入指数"></a>1.9 输入指数</h2><ul>
+<li>输入“^”</li>
+</ul>
+<h2 id="1-10-输入希腊字母"><a href="#1-10-输入希腊字母" class="headerlink" title="1.10 输入希腊字母"></a>1.10 输入希腊字母</h2><ul>
+<li>Ctrl + Shift + G 调节到输入希娜字母</li>
+<li>希娜字母和字母的对照表如下图</li>
+<li>基本上是发音的首字母</li>
+</ul>
+<img src="/post/d5673d21/希娜字符输入表.png">
+<h1 id="2-绘图"><a href="#2-绘图" class="headerlink" title="2 绘图"></a>2 绘图</h1><h2 id="2-1-调用格式："><a href="#2-1-调用格式：" class="headerlink" title="2.1 调用格式："></a>2.1 调用格式：</h2><pre><code>plot (f(x), x=xmin .. xmax);
+plot (f(x), x=xmin .. xmax, y=ymin .. ymax);
+plot ([f1(x), f2(x), …], x=xmin .. xmax);
+plot (f(x), x=xmin .. xmax, option);
+</code></pre><ul>
+<li>其中， xmin..xmax 为 x 的变化范围， ymin..ymax 为 y(即 f(x))的变化范围。</li>
+<li>option 选项参数主要包含<a href="maple使用教程">^1</a>：<ul>
+<li>axes：坐标轴类型：FRAME，FRAME，NORMAL，NONE</li>
+<li>color：颜色</li>
+<li>coords：坐标系：笛卡尔（cartesian），极坐标（polar），双极坐标系(bipolar)、 对数坐标（logarthmic）</li>
+<li>labels：坐标轴名称</li>
+<li>linestyle：设定所绘线条的线型(linestyle=n, n 为 1 是实线, 2 为点, 3 为虚线, 4 为虚线与点交错)</li>
+<li>scaling：设置 x 与 y 轴的比例(unconstrained 非约束， constrained 约束，比例为 1:1)</li>
+<li>style：设定图形的显示样式(LINE(线形)、 POINT(点)、 PATCH(显示多边形与边线)、 PATCHNOGRID(只显示色彩而无边界)</li>
+<li>symbol：设定点的格式，主要有 BOX(方块)、 CROSS(十字)、 CIRCLE(圆形)、 POINT(点)、 DIAMOND(菱形)等几项</li>
+<li>thickness：设定线条的粗细(0、 1、 2、 3 几种参数, 数值越大线条越粗)</li>
+<li>tickmarks：设定坐标轴刻度的数目(设定 tickmarks=[m, n], 则 x 轴刻度为 m, y 轴为 n)</li>
+<li>view：设定屏幕上图形显示的最大坐标和最小坐标，缺省是整个曲线</li>
+</ul>
+</li>
+</ul>
+<p>下面是对一些关键参数的详细记录。</p>
+<h2 id="2-2-颜色："><a href="#2-2-颜色：" class="headerlink" title="2.2 颜色："></a>2.2 颜色：</h2><ul>
+<li>关键字：color</li>
+<li>常用的颜色：black blue navy coral cyan brown gold green gray grey khaki magenta maroon orange pink plum red sienna tan turquoise violet wheat white yellow</li>
+</ul>
+<h2 id="2-3-线型"><a href="#2-3-线型" class="headerlink" title="2.3 线型"></a>2.3 线型</h2><h2 id="2-4-坐标轴名称及图表名称"><a href="#2-4-坐标轴名称及图表名称" class="headerlink" title="2.4 坐标轴名称及图表名称"></a>2.4 坐标轴名称及图表名称</h2><ul>
+<li>labels=[x, y]：坐标轴名称，x,y分别代表x轴和y轴的名字</li>
+<li>title = titlename</li>
+</ul>
+<h2 id="2-5-字体控制"><a href="#2-5-字体控制" class="headerlink" title="2.5 字体控制"></a>2.5 字体控制</h2><ul>
+<li>有四个部分的字体控制：font（图形内的字体），titlefont（标题字体），axesfont（坐标轴），labelfont（坐标轴标题）</li>
+<li><p>字体控制的格式都是一样的：</p>
+<pre><code>控制字=[font,style,size]
+font指定字体，style指定字体样式（斜体、粗体等），size指定字体大小，直接填写数字即可
+</code></pre></li>
+<li><p>字体和样式如下表，其中SYMBOL没有样式</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>SYMBOL</th>
+<th>TIMES</th>
+<th style="text-align:right">COURIER</th>
+<th style="text-align:right">HELVETICA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td>ROMAN</td>
+<td style="text-align:right">DEFAULT</td>
+<td style="text-align:right">DEFAULT</td>
+</tr>
+<tr>
+<td></td>
+<td>BOLD</td>
+<td style="text-align:right">BOLD</td>
+<td style="text-align:right">BOLD</td>
+</tr>
+<tr>
+<td></td>
+<td>ITALIC</td>
+<td style="text-align:right">OBLIQUE</td>
+<td style="text-align:right">OBLIQUE</td>
+</tr>
+<tr>
+<td></td>
+<td>BOLDITALIC</td>
+<td style="text-align:right">BOLDOBLIQUE</td>
+<td style="text-align:right">BOLDOBLIQUE</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>一个例子：</li>
+</ul>
+<figure class="highlight jboss-cli"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">plot<span class="params">(y1, <span class="attr">color</span> = black, <span class="attr">axes</span> = NORMAL, <span class="attr">title</span> = U-ruo, <span class="attr">linestyle</span> = 1, <span class="attr">font</span> = [TIMES, ITALIC, 10], <span class="attr">axesfont</span> = [COURIER, OBLIQUE, 10], <span class="attr">titlefont</span> = [HELVETICA, BOLD, 10], <span class="attr">labelfont</span> = [TIMES, OBLIQUE, 20])</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="2-6-坐标轴选项"><a href="#2-6-坐标轴选项" class="headerlink" title="2.6 坐标轴选项"></a>2.6 坐标轴选项</h2><ul>
+<li>对数坐标：<ul>
+<li>logplot：y轴对数坐标</li>
+<li>loglogplot：x，y都是对数坐标</li>
+<li>semilogplot：x轴是对数坐标</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意：采用对数坐标的时候必须要在前面添加“with(plots)”选项</strong></p>
+<p>一个例子：</p>
+<pre><code>> with(plots);
+> logplot({exp(x), exp(x^2), exp(3*x+1)}, x = .1 .. 10, y = 1 .. 10^6);
+</code></pre><h2 id="2-7-绘制多个图形"><a href="#2-7-绘制多个图形" class="headerlink" title="2.7 绘制多个图形"></a>2.7 绘制多个图形</h2><p>标准做法有两种，随意看看结果的做法有一种。</p>
+<h3 id="2-7-1-利用display"><a href="#2-7-1-利用display" class="headerlink" title="2.7.1 利用display"></a>2.7.1 利用display</h3><ul>
+<li>要记得加上“with(plots)”</li>
+</ul>
+<figure class="highlight nix"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span>(plots):</span><br><span class="line">Plot3 := semilogplot(P3mm, <span class="attr">color</span> = <span class="string">"Blue"</span>, <span class="attr">legend</span> = <span class="string">"H0=3mm"</span>):</span><br><span class="line">Plot4 := semilogplot(P4mm, <span class="attr">color</span> = <span class="string">"black"</span>, <span class="attr">legend</span> = <span class="string">"H0=4mm"</span>):</span><br><span class="line">Plot5 := semilogplot(P5mm, <span class="attr">color</span> = <span class="string">"yellow"</span>, <span class="attr">legend</span> = <span class="string">"H0=5mm"</span>):</span><br><span class="line">Plot6 := semilogplot(P6mm, <span class="attr">color</span> = <span class="string">"green"</span>, <span class="attr">legend</span> = <span class="string">"H0=6mm"</span>):</span><br><span class="line">Plot10 := semilogplot(P10mm, <span class="attr">color</span> = <span class="string">"orange"</span>, <span class="attr">legend</span> = <span class="string">"H0=10mm"</span>):</span><br><span class="line"> Plot120 := semilogplot(P120mm, <span class="attr">color</span> = <span class="string">"Red"</span>, <span class="attr">legend</span> = <span class="string">"H0=120mm"</span>):</span><br><span class="line"> Plot240 := semilogplot(P240mm, <span class="attr">style</span> = point, <span class="attr">color</span> = <span class="string">"black"</span>, <span class="attr">legend</span> = <span class="string">"H0=240mm"</span>):</span><br><span class="line">display({Plot10, Plot120, Plot240, Plot3, Plot4, Plot5, Plot6}, <span class="attr">view</span> = [<span class="number">0.2</span>e-<span class="number">1</span> .. <span class="number">10</span>, <span class="number">5</span> .. <span class="number">50</span>], <span class="attr">axes</span> = boxed, <span class="attr">scaling</span> = constrained, <span class="attr">title</span> = <span class="string">"U-ruo"</span>)</span><br></pre></td></tr></tbody></table></figure>
+<img src="/post/d5673d21/多图绘制.png">
+<h3 id="2-7-2-利用一个plot绘制出两个图"><a href="#2-7-2-利用一个plot绘制出两个图" class="headerlink" title="2.7.2 利用一个plot绘制出两个图"></a>2.7.2 利用一个plot绘制出两个图</h3><figure class="highlight lsl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">with(plots);</span><br><span class="line"></span><br><span class="line">logplot([exp(x), exp(x^<span class="number">2</span>), exp(<span class="number">3</span>*x+<span class="number">1</span>)], x = <span class="number">.1</span> .. <span class="number">10</span>, y = <span class="number">1</span> .. <span class="number">10</span>^<span class="number">6</span>, legend = [typeset(exp(x)), typeset(exp(<span class="number">3</span>*x+<span class="number">1</span>)), typeset(exp(x^<span class="number">2</span>))]);</span><br><span class="line"></span><br><span class="line">logplot([exp(x), exp(x^<span class="number">2</span>), exp(<span class="number">3</span>*x+<span class="number">1</span>)], x = <span class="number">.1</span> .. <span class="number">10</span>, y = <span class="number">1</span> .. <span class="number">10</span>^<span class="number">6</span>, legend = [<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>])</span><br><span class="line"></span><br><span class="line">上述两种只是图例表达不一样</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="2-7-3"><a href="#2-7-3" class="headerlink" title="2.7.3"></a>2.7.3</h3><ul>
+<li>直接选中一个表达式，拖到一个现有的图中。</li>
+<li>这种方式可以用来暂时进行比较</li>
+</ul>
+<h2 id="2-8-图例"><a href="#2-8-图例" class="headerlink" title="2.8 图例"></a>2.8 图例</h2><ul>
+<li>关键字：legend</li>
+<li>构造形式1：如2.7.1中的例子</li>
+</ul>
+<figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">legend</span>=“图例名称”</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>构造形式2：如2.7.2中的例子</li>
+</ul>
+<figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">legend</span> = [<span class="string">"图例名1"</span>, <span class="string">"图例名2"</span>, <span class="string">"图例名3"</span>]</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>图例还有一个关键字：legendstyle，包括了字体大小和图例位置</li>
+</ul>
+<figure class="highlight lsl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">legendstyle = [font = [<span class="string">"HELVETICA"</span>, <span class="number">9</span>], location = right]</span><br><span class="line">完整例子：</span><br><span class="line">logplot([exp(x), exp(x^<span class="number">3</span>), exp(<span class="number">3</span>*x+<span class="number">1</span>)], x = <span class="number">.1</span> .. <span class="number">10</span>, y = <span class="number">1</span> .. <span class="number">10</span>^<span class="number">6</span>, font = [legend, <span class="string">"HELVETICA"</span>, <span class="string">"ROMAN"</span>, <span class="number">12</span>], legendstyle = [font = [<span class="string">"HELVETICA"</span>, <span class="number">12</span>], location = bottom], thickness = <span class="number">4</span>, style = [point, point, point], legend = [<span class="string">"1"</span>, <span class="string">"2"</span>, <span class="string">"3"</span>])</span><br></pre></td></tr></tbody></table></figure>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-03-30T08:19:04.119Z" itemprop="dateUpdated">2019-03-30 16:19:04</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Maple/">Maple</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/d5673d21.html&title=《Maple学习笔记》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/d5673d21.html&title=《Maple学习笔记》 — 时光之笔&source=最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/d5673d21.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Maple学习笔记》 — 时光之笔&url=hxblog.top/post/d5673d21.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/d5673d21.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/edc1ad1c.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Maple学习笔记：求解方程相关（更新。。。）</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/8e65c912.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">生酮食物</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/d5673d21.html&title=《Maple学习笔记》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/d5673d21.html&title=《Maple学习笔记》 — 时光之笔&source=最近推导公式，所以自学了Maple。真是个强大的东西。还有很多待学习的地方。暂时记录一些自己容易忽略的东西，便于查找。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/d5673d21.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Maple学习笔记》 — 时光之笔&url=hxblog.top/post/d5673d21.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/d5673d21.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/d5673d21.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

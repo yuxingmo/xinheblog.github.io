@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习笔记：Palabos（1）格子离散化和动态行为 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="Palabos">
+    <meta name="description" content="决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。 知识点： dynamics objects，block-lattice 5.9日更新，修正了一些错误。">
+<meta name="keywords" content="Palabos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记：Palabos（1）格子离散化和动态行为">
+<meta property="og:url" content="hxblog.top/post/7ad67490.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。 知识点： dynamics objects，block-lattice 5.9日更新，修正了一些错误。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.postimg.cc/1XnK7P1L/blocklattice.png">
+<meta property="og:image" content="https://i.postimg.cc/vB3Q2FtL/classplb-1-1-Block2-D-inherit-graph.png">
+<meta property="og:image" content="https://i.postimg.cc/SsN4M1bX/structplb-1-1-Dynamics-inherit-graph.png">
+<meta property="og:updated_time" content="2019-05-09T12:46:44.539Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习笔记：Palabos（1）格子离散化和动态行为">
+<meta name="twitter:description" content="决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。 知识点： dynamics objects，block-lattice 5.9日更新，修正了一些错误。">
+<meta name="twitter:image" content="https://i.postimg.cc/1XnK7P1L/blocklattice.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习笔记：Palabos（1）格子离散化和动态行为</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习笔记：Palabos（1）格子离散化和动态行为</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-21T03:23:29.000Z" itemprop="datePublished" class="page-time">
+  2019-04-21
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-离散化：构造格子网格"><span class="post-toc-text">1 离散化：构造格子网格</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-AtomicBlock2D"><span class="post-toc-text">1.1 AtomicBlock2D</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-MultiBlock2D"><span class="post-toc-text">1.2 MultiBlock2D</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-MultiGrid2D"><span class="post-toc-text">1.3 MultiGrid2D</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-动态行为（dynamics）"><span class="post-toc-text">2 动态行为（dynamics）</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-学习笔记：Palabos（1）格子离散化和动态行为" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习笔记：Palabos（1）格子离散化和动态行为</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-21 11:23:29" datetime="2019-04-21T03:23:29.000Z" itemprop="datePublished">2019-04-21</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。</p>
+<p>知识点： dynamics objects，block-lattice</p>
+<p>5.9日更新，修正了一些错误。</p>
+<a id="more"></a>
+<h1 id="1-离散化：构造格子网格"><a href="#1-离散化：构造格子网格" class="headerlink" title="1 离散化：构造格子网格"></a>1 离散化：构造格子网格</h1><p>我们通常需要构造一个格子块。而这个格子块通常就是求解域，可以理解成一个这样的东西：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.postimg.cc/1XnK7P1L/blocklattice.png" alt="blocklattice.png" title>
+                </div>
+                <div class="image-caption">blocklattice.png</div>
+            </figure>
+<p>我们知道求解域分为好几种，最简单的就是矩形求解域，就像上图表示的这种。</p>
+<p>上图是一个二维的例子。其实对应于具体的类就是<a href="http://www.palabos.org/documentation/develguide/classplb_1_1BlockLattice2D.html" target="_blank" rel="noopener">BlockLattice2D</a>。BlockLattice2D是一个类模板。Palabos和openfoam一样，大量采用了泛型编程。虽然目前还是刚刚看，不是很了解，但是这个东西应该非常重要。而且看官网的文档，这个类里面包括了非常多的虚函数，应该是不能直接用的东西。于是，<strong>要看看是在什么时候对这些类方法进行实现</strong>。</p>
+<p>但是，如果边界比较复杂，或者局部需要加密的网格，就会用到多块的网格。这里就会用到<a href="http://www.palabos.org/documentation/develguide/classplb_1_1MultiBlockLattice2D.html" target="_blank" rel="noopener">MultiBlockLattice</a>。</p>
+<p>实际上，拿2D的举例，块（block）的继承关系如下图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.postimg.cc/vB3Q2FtL/classplb-1-1-Block2-D-inherit-graph.png" alt="block2D的继承图" title>
+                </div>
+                <div class="image-caption">block2D的继承图</div>
+            </figure>
+<p>可以看到，块分为三种大的类型：</p>
+<ul>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1AtomicBlock2D.html" target="_blank" rel="noopener">AtomicBlock2</a>；</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1MultiBlock2D.html" target="_blank" rel="noopener">MultiBlock2D</a>；</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1MultiGrid2D.html" target="_blank" rel="noopener">MultiGrid2D</a>。</li>
+</ul>
+<h2 id="1-1-AtomicBlock2D"><a href="#1-1-AtomicBlock2D" class="headerlink" title="1.1 AtomicBlock2D"></a>1.1 AtomicBlock2D</h2><p>AtomicBlock2D应该是最为普通的一种，而前面提到的BlockLattice2D就是继承于它。构造的是一个矩形区域的格子块，其构造函数如下：</p>
+<figure class="highlight lisp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AtomicBlock2D (<span class="name">plint</span> nx_, plint ny_)</span><br><span class="line">AtomicBlock2D (<span class="name">AtomicBlock2D</span> const <span class="symbol">&rhs</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>可以看到，其参数主要就是nx和ny。后面那个构造函数是复制构造函数。<br>继承自AtomicBlock2D的，为构造格子块的类是<a href="http://www.palabos.org/documentation/develguide/classplb_1_1BlockLattice2D.html#aa2e1ef3acfca16a1e2d159cfff7645b7" target="_blank" rel="noopener">BlockLattice2D</a>。其构造函数是：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span>< <span class="keyword">typename</span> U > <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">plb</span>:</span>:BlockLattice2D< T, Descriptor >::BlockLattice2D	(	plint 	nx_,</span><br><span class="line">plint 	ny_,</span><br><span class="line">Dynamics< T, Descriptor > * 	backgroundDynamics_ </span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+<p>nx，ny表达了它继承自简单矩形块的构造方法，此外还多了一个参数，非常重要的参数，那就是<strong>Dynamics</strong>。Dynamics是动力学构造，在下一节介绍。</p>
+<h2 id="1-2-MultiBlock2D"><a href="#1-2-MultiBlock2D" class="headerlink" title="1.2 MultiBlock2D"></a>1.2 MultiBlock2D</h2><p>看名字就可以看出来，MultiBlock2D体现在多块网格上。用在格子构造上的是其子类：<a href="http://www.palabos.org/documentation/develguide/classplb_1_1MultiBlockLattice2D.html" target="_blank" rel="noopener">MultiBlockLattice2D</a></p>
+<p>官方声明：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span>< <span class="keyword">typename</span> U > <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">plb</span>:</span>:MultiBlockLattice2D< T, Descriptor ></span><br><span class="line">A <span class="keyword">complex</span> LatticeBase, itself decomposed into smaller components.</span><br></pre></td></tr></tbody></table></figure>
+<p>其描述如下：</p>
+<p>A complex LatticeBase, itself decomposed into smaller components.</p>
+<p>This extensible class can be used for example for cache-optimized lattices, irregular domains (no memory allocation in areas exterior to the domain) and parallel lattices. The actual behavior of the lattice is parametrizable by a multiBlockHandler instance, which is given to the constructor.</p>
+<p>The MultiBlockLattice does not itself possess LatticeProcessors. The Lattice- Processors are delegated to the respective LatticeBases.</p>
+<p>翻译（凑合看看）：</p>
+<p>MultiBlockLattice2D是一种复杂的格子块，它可以分解成更小的组件。</p>
+<p>这个可扩展类可用于缓存优化的格子、不规则域(在域外部没有内存分配)和并行网格。网格的实际行为可以通过一个multiBlockHandler实例参数化，该实例被提供给构造函数。</p>
+<p>多块格子本身并不拥有格子处理器。这些格子处理器被委托给各自的基础格子。也就是多块格子它们格子有自己的格子处理器。</p>
+<p>来看看其构造函数：</p>
+<figure class="highlight armasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">template</span><typename t , template< typename u> class Descriptor></typename></span><br><span class="line"><span class="symbol">plb</span>::<span class="keyword">MultiBlockLattice2D< </span>T, Descriptor >::<span class="keyword">MultiBlockLattice2D	</span>(	<span class="keyword">MultiBlockManagement2D </span>const & 	<span class="keyword">multiBlockManagement_,</span></span><br><span class="line"><span class="keyword"> </span>       <span class="keyword">BlockCommunicator2D </span>* 	<span class="keyword">blockCommunicator_,</span></span><br><span class="line"><span class="keyword"> </span>       CombinedStatistics * 	combinedStatistics_,</span><br><span class="line">        <span class="keyword">MultiCellAccess2D< </span>T, Descriptor > * 	<span class="keyword">multiCellAccess_,</span></span><br><span class="line"><span class="keyword"> </span>       Dynamics< T, Descriptor > * 	<span class="keyword">backgroundDynamics_ </span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+<p>这里面包含的参数较多。但是可以看到MultiBlockManagement2D应该是管理多块网格的一个总的联系。BlockCommunicator2D 应该处理的是多块网格之间的数据传递，CombinedStatistics 是一个合并统计，需要进一步了解。MultiCellAccess2D 暂时未知，Dynamics就是指的格子的动态行为了。</p>
+<p>MultiBlockLattice2D还有一个构造函数如下：<br></p><figure class="highlight armasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="symbol">plb</span>::<span class="keyword">MultiBlockLattice2D< </span>T, Descriptor >::<span class="keyword">MultiBlockLattice2D	</span>(	plint 	nx,</span><br><span class="line"><span class="symbol">plint</span> 	ny,</span><br><span class="line"><span class="symbol">Dynamics</span>< T, Descriptor > * 	<span class="keyword">backgroundDynamics_ </span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p><del>这个函数实际是为了<strong>指定一个背景网格的动态行为</strong>。</del></p>
+<p>在<a href="http://www.palabos.org/documentation/userguide/problem-setup.html#attributing-dynamics-objects" target="_blank" rel="noopener">官方文档</a>中提到过：When constructing a new block-lattice, you must decide what type of collision is going to be executed on each of its cells, by assigning them a dynamics object. To avoid bugs related to cells without dynamics objects, the constructor of a block-lattice assigns a default-alue for the dynamics to all cells, the so-called <em>background dynamics</em>. After this, the dynamics of each cell can be redefined in order to adjust the behavior of the cells locally.</p>
+<p>也就是说， 构造格子时，需要为每个格子分配动态行为：dynamics object。为了防止出现bug，在构造格子时，指定了一个背景动态行为：<em>background dynamics</em>。完成了背景动态行为的指定后，可以对需要单独处理的格子指定其的动态行为。通过两种方法：</p>
+<ul>
+<li>指定某个格子的动态行为：<figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">lattice</span><span class="selector-class">.get</span>(0,0,0)<span class="selector-class">.getDynamics</span>()<span class="selector-class">.setOmega</span>(<span class="selector-tag">newOmega</span>);</span><br></pre></td></tr></tbody></table></figure>
+</li>
+</ul>
+<p>调用get(0,0,0)获得坐标为(0,0,0)的这个cell然后调用getDynamcs()获得这个cell的动态再调用setOmega(newOmega)来设定这个单元的动态的松弛因子。恩，很好。很长。</p>
+<ul>
+<li>指定某个格子块的动态行为：</li>
+</ul>
+<figure class="highlight haxe"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Override background-dynamics to guarantee and independent per-cell</span></span><br><span class="line"><span class="comment">//   copy of the dynamics object.</span></span><br><span class="line">defineDynamics( lattice, lattice.getBoundingBox(),</span><br><span class="line">                <span class="keyword">new</span> <span class="type">BGKdynamics</span><t,descriptor> );</t,descriptor></span><br></pre></td></tr></tbody></table></figure>
+<p>同时，官方文档里也提到了，defineDynamics方法对不同的类有不同的实现。</p>
+<h2 id="1-3-MultiGrid2D"><a href="#1-3-MultiGrid2D" class="headerlink" title="1.3 MultiGrid2D"></a>1.3 MultiGrid2D</h2><p>它和MultiBlock2D应该是有着本质的区别。MultiBlock2D体现的是“多块”网格，而MultiGrid2D体现的是“多重”网格。</p>
+<p>同样的，创建网格用的应该还是其子类<a href="http://www.palabos.org/documentation/develguide/classplb_1_1MultiGridLattice2D.html" target="_blank" rel="noopener">MultiGridLattice2D</a>。</p>
+<p>官方的描述：Main class when dealing with grid refinement.</p>
+<p>可见，是处理细化网格的主要类。<strong>这种细化网格和前面的多块网格有什么区别？</strong></p>
+<p>看看它的构造函数：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T , <span class="keyword">template</span>< <span class="keyword">typename</span> U > <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">plb</span>:</span>:MultiGridLattice2D< T, Descriptor >::MultiGridLattice2D	(	MultiGridManagement2D 	management,</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">vector</span>< BlockCommunicator2D * > 	communicators_,</span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">vector</span>< CombinedStatistics * > 	combinedStatistics_,</span><br><span class="line">        Dynamics< T, Descriptor > * 	backgroundDynamics,</span><br><span class="line">        plint 	behaviorLevel,</span><br><span class="line">        FineGridInterfaceInstantiator< T, Descriptor > * 	fineGridInstantiator_,</span><br><span class="line">        CoarseGridInterfaceInstantiator< T, Descriptor > * 	coarseGridInstantiator_ </span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+<p>和多块网格的构造函数有相似之处。MultiGrid2D的构造函数同样有一个管理器：MultiGridManagement2D，但是communicators_ 和combinedStatistics_ 都变成了向量。此外还多了一个 fineGridInstantiator_ 和coarseGridInstantiator_ 变量。从字面意思上看应该是精细网格界面实例化和粗糙网格界面实例化。其应用需要进一步看看实例。</p>
+<p>但是可以肯定的是，<strong>对于精细网格，就是用的该类来处理</strong>。</p>
+<h1 id="2-动态行为（dynamics）"><a href="#2-动态行为（dynamics）" class="headerlink" title="2 动态行为（dynamics）"></a>2 动态行为（dynamics）</h1><p>显然，动态行为是和物理行为相关最为紧密的。对于如何执行碰撞有和边界条件的实施有着重要的意义。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.postimg.cc/SsN4M1bX/structplb-1-1-Dynamics-inherit-graph.png" alt="Dynamics的继承关系图" title>
+                </div>
+                <div class="image-caption">Dynamics的继承关系图</div>
+            </figure>
+<p>上图就是dynamic类的继承关系图，可见还是相当复杂的。带红色框的是文档化和结构化的类，也就是用的最多的类。下面列出来，可能会用到的动态：</p>
+<ul>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1BGKdynamics.html" target="_blank" rel="noopener">BGKdynamics</a>：最基本的BGK动态</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1ExternalForceDynamics.html" target="_blank" rel="noopener">ExternalForceDynamics</a>：包含外力的BGK动态</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1GuoExternalForceSmagorinskyBGKdynamics.html" target="_blank" rel="noopener">GuoExternalForceSmagorinskyBGKdynamics</a>：这个应该是郭照立老师的包含外阿里的BGK动态</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1MRTdynamics.html" target="_blank" rel="noopener">MRTdynamics</a>：多松弛动态，实际上这个多松弛用的并不多</li>
+<li><a href="http://www.palabos.org/documentation/develguide/classplb_1_1MomentumExchangeBounceBack.html" target="_blank" rel="noopener">MomentumExchangeBounceBack</a>：是处理无滑移边界条件的一个非常流行的实施手段。</li>
+</ul>
+<p>来看看最基本的BGKdynamics，其构造函数如下：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T , <span class="keyword">template</span>< <span class="keyword">typename</span> U > <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">plb</span>:</span>:BGKdynamics< T, Descriptor >::BGKdynamics	(	T 	omega_	)</span><br></pre></td></tr></tbody></table></figure>
+<p>可见，里面就只需要设置一个参数，那就是松弛因子。而这个类里面也就只包含一个成员变量，就是这个松弛因子omega_。</p>
+<p>在BGKdynamics里面，包含了，包括碰撞的实施方法：<a href="http://www.palabos.org/documentation/develguide/classplb_1_1BGKdynamics.html#ad995a1f325963d2bc8d611fbae0e28f3" target="_blank" rel="noopener">collide</a>；执行包含宏观量的碰撞方法：<a href="http://www.palabos.org/documentation/develguide/classplb_1_1BGKdynamics.html#aec81785a28875bd1e9be8633a99508e4" target="_blank" rel="noopener">collideExternal</a>；计算平衡态分布函数的方法：| <a href="http://www.palabos.org/documentation/develguide/classplb_1_1BGKdynamics.html#a7a42a426b10e0138acc3a927b54ecc19" target="_blank" rel="noopener">computeEquilibrium</a> |</p>
+<p>暂时写到这里。主要看了两大类型的类。涉及到定义格子的blocklattice和定义格子动态行为的dynamic。</p>
+<p>下一次写初始化和边界条件。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-09T12:46:44.539Z" itemprop="dateUpdated">2019-05-09 20:46:44</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Palabos/">Palabos</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/7ad67490.html&title=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/7ad67490.html&title=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&source=决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。
+知识点： dynamics objec..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/7ad67490.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&url=hxblog.top/post/7ad67490.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/7ad67490.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/52a5903c.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">学习笔记：Palabos（2）快速编程</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/6c13cd55.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/7ad67490.html&title=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/7ad67490.html&title=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&source=决定用Palabos来做了。开始记录一些关于Palabos的笔记。一边学一边记笔记，算是来自于官网的搬运和翻译吧。
+知识点： dynamics objec..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/7ad67490.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（1）格子离散化和动态行为》 — 时光之笔&url=hxblog.top/post/7ad67490.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/7ad67490.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/7ad67490.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

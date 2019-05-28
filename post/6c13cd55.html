@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="onedrive,oneindex">
+    <meta name="description" content="Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。">
+<meta name="keywords" content="onedrive,oneindex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床">
+<meta property="og:url" content="hxblog.top/post/6c13cd55.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/08/EcQc24.md.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/08/EcQwbq.md.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/08/EclZd0.md.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/08/EclKWF.md.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/08/EclYo6.md.png">
+<meta property="og:image" content="https://www.962v.com/images/2019/05/08/install.gif">
+<meta property="og:updated_time" content="2019-05-08T14:50:01.932Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床">
+<meta name="twitter:description" content="Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/05/08/EcQc24.md.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-04-15T09:45:51.000Z" itemprop="datePublished" class="page-time">
+  2019-04-15
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/好物推荐/">好物推荐</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-写在前面"><span class="post-toc-text">1 写在前面</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-搭建分享网盘需要的准备"><span class="post-toc-text">2 搭建分享网盘需要的准备</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-开始吧"><span class="post-toc-text">3 开始吧</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-下载oneindex作为备用"><span class="post-toc-text">3.1 下载oneindex作为备用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2-获得一个免费的虚拟主机空间"><span class="post-toc-text">3.2 获得一个免费的虚拟主机空间</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3-上传oneindex至虚拟主机"><span class="post-toc-text">3.3 上传oneindex至虚拟主机</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-4-安装oneindex"><span class="post-toc-text">3.4 安装oneindex</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-下载链接"><span class="post-toc-text">4 下载链接</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-04-15 17:45:51" datetime="2019-04-15T09:45:51.000Z" itemprop="datePublished">2019-04-15</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/好物推荐/">好物推荐</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。</p>
+<hr>
+<a id="more"></a>
+<h1 id="1-写在前面"><a href="#1-写在前面" class="headerlink" title="1 写在前面"></a>1 写在前面</h1><p>总所周知，我们申请的5T的教育版onedrive网盘，其实是一个子账户。也就是说<strong>管理员是可以完全查看，甚至删除你网盘里面的内容的</strong>。这也是子账户不安全的地方。</p>
+<p>只不过一般管理员大佬事情多，没空去研究数量几千的子账户。所以只要常规使用，肯定是没问题的。这就决定了教育版的onedrive无法作为个人的私人网盘。那就只能拿来存放一些供大家分享的容器了。比如分享的软件，影视作品，音乐，图片，书籍等待。</p>
+<p>所以再次强调：<strong>切勿在onedrive里面存放违法以及过于私人的物品</strong>。</p>
+<p>下面就是搭建一个分享网盘的具体操作。</p>
+<h1 id="2-搭建分享网盘需要的准备"><a href="#2-搭建分享网盘需要的准备" class="headerlink" title="2 搭建分享网盘需要的准备"></a>2 搭建分享网盘需要的准备</h1><ul>
+<li>一个onedrive账号：可以是教育版5T空间的，也可以是自己的私人onedrive，只不过私人的一般只有5G空间，还是拿来做同步盘比较好。</li>
+<li>一个虚拟主机：支持PHP5.6以上就行，至于VPS，个人认为有点浪费了，如果用其他的搭建工具，就得要VPS。可以用很多国外的免费主机空间，要求不高，100M的空间就可以搞定。</li>
+<li>一个域名：可以是免费的二级域名，也可以是购买的顶级域名。不过我觉得拿个二级免费域名就可以了。因为只是挂一个网页前端而已。一般拿到一个免费的主机空间都会送一个二级域名。</li>
+<li>oneindex虚拟主机安装包：可以去<a href="https://github.com/donwa/oneindex/releases" target="_blank" rel="noopener">官网</a>下载。</li>
+</ul>
+<p>如果采用onedrive教育版5T+免费主机+免费二级域名，那么就可以零成本搭建一个分享网盘或者图床了。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/08/EcQc24.md.png" alt="图床" title>
+                </div>
+                <div class="image-caption">图床</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/08/EcQwbq.md.png" alt="分享网盘" title>
+                </div>
+                <div class="image-caption">分享网盘</div>
+            </figure>
+<h1 id="3-开始吧"><a href="#3-开始吧" class="headerlink" title="3 开始吧"></a>3 开始吧</h1><h2 id="3-1-下载oneindex作为备用"><a href="#3-1-下载oneindex作为备用" class="headerlink" title="3.1 下载oneindex作为备用"></a>3.1 下载oneindex作为备用</h2><p>去官网里面下载最新版本的就可以了。在本文章的后面，把本文用到的软件全部都打包了，也可以用本文后面的链接，不过最好在官网下，理由就是官网能保证最新版。而我的链接只能保证在写文章的这个时刻是最新版。</p>
+<h2 id="3-2-获得一个免费的虚拟主机空间"><a href="#3-2-获得一个免费的虚拟主机空间" class="headerlink" title="3.2 获得一个免费的虚拟主机空间"></a>3.2 获得一个免费的虚拟主机空间</h2><p>免费的主机空间有不少，这里推荐我自己用的2个免费的主机空间：<a href="https://profreehost.com" target="_blank" rel="noopener">profreehost</a>和<a href="https://www.freewebhostingarea.com/" target="_blank" rel="noopener">freewebhostingarea</a>。不过这种免费的主机空间速度不是很稳定，可能三天两头就要被墙一下。用邮箱即可注册。实测第一个传输速度要比第二个快一些，但是注册流程的话第二个简单一些。</p>
+<p>所以如果要免费的主机，还是推荐国内的一个主机厂商：<a href="https://www.sanfengyun.com/" target="_blank" rel="noopener">三丰云</a>。这个可以用他的免备案的二级域名。最关键的是他的虚拟主机是国内的，也就是网速很快。如果是想要弄个稳定的免费网站，还是在这里弄比较好。唯一的问题，就是需要用手机注册，并且申请免费虚拟主机的时候，需要绑定邮箱。这样基本上一个人就只能申请一个免费空间了。</p>
+<p>其实只要支持PHP的空间就行了。这里我用的是profreehost的主机作为演示。下图第一张是我注册好了之后的里面包含了账号信息和送的二级域名。后面的图是ftp信息。其实需要的就是ftp信息。要用它来上传oneindex。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/08/EclZd0.md.png" alt="注册成功的信息" title>
+                </div>
+                <div class="image-caption">注册成功的信息</div>
+            </figure>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/08/EclKWF.md.png" alt="FTP信息" title>
+                </div>
+                <div class="image-caption">FTP信息</div>
+            </figure>
+<h2 id="3-3-上传oneindex至虚拟主机"><a href="#3-3-上传oneindex至虚拟主机" class="headerlink" title="3.3 上传oneindex至虚拟主机"></a>3.3 上传oneindex至虚拟主机</h2><p>通过FTP软件连接到你的虚拟主机，然后把<strong>压缩包</strong>传上去。然后再在主机面板里把压缩包解压。这样上传速度会快不少。不过如果你的虚拟主机不支持在线解压，那就只好在本地解压好了再上传了。无非就是速度慢一点。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/08/EclYo6.md.png" alt="上传oneindex" title>
+                </div>
+                <div class="image-caption">上传oneindex</div>
+            </figure>
+<p>这里演示的主机不支持在线解压，所以还是老老实实上传。图片中的FTP软件是8uftp，挺好用的。会在文末一起打包。</p>
+<h2 id="3-4-安装oneindex"><a href="#3-4-安装oneindex" class="headerlink" title="3.4 安装oneindex"></a>3.4 安装oneindex</h2><p>如果上传好了，直接打开你的二级域名，会开始进入安装程序。安装之前会自检，如果自检成功的话就是如下的界面。</p>
+<p>过程比较傻瓜，这里就不写了。如果不清楚，可以看oneindex的<a href="https://github.com/donwa/oneindex" target="_blank" rel="noopener">官网</a>，里面有一个GIF看的很清楚。</p>
+<p>算了搬运过来吧。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://www.962v.com/images/2019/05/08/install.gif" alt="install" title>
+                </div>
+                <div class="image-caption">install</div>
+            </figure>
+<p>至于里面的设置项都很简单，不用再说。</p>
+<h2 id="4-下载链接"><a href="#4-下载链接" class="headerlink" title="4 下载链接"></a>4 下载链接</h2><p>包括了oneindex的压缩包，FPT软件。</p>
+<p><a href="https://pan.baidu.com/s/16tMJ0Rr5PrjEWjC_b9M0SA" target="_blank" rel="noopener">百度网盘</a>：2333 （不出意外，都是这个）<br><a href="https://www.lanzous.com/b689236" target="_blank" rel="noopener">蓝奏云</a>：etk9</p>
+<p>我搭建的分享网盘里面也可以下载哦，在<strong>软件</strong>分类目录里面找。</p>
+<ul>
+<li><a href="http://lepas2.eu5.org/" target="_blank" rel="noopener">我的分享网盘</a></li>
+<li><a href="http://tuchuang.ueuo.com/" target="_blank" rel="noopener">我搭建的公共图床</a>，欢迎使用，亲测速度挺快的。<strong>但是重要图片和私人图片不要存哦</strong>。</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-08T14:50:01.932Z" itemprop="dateUpdated">2019-05-08 22:50:01</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/onedrive/">onedrive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oneindex/">oneindex</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/6c13cd55.html&title=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/6c13cd55.html&title=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&source=Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/6c13cd55.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&url=hxblog.top/post/6c13cd55.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/6c13cd55.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/7ad67490.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">学习笔记：Palabos（1）格子离散化和动态行为</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/b160a63e.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">如何制定一份旅游攻略？</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/6c13cd55.html&title=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/6c13cd55.html&title=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&source=Onedrive教育版的5T空间怎么用？利用oneindex搭建一个分享网盘吧。
+" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/6c13cd55.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《好物分享：利用onedrive和OneIndex搭建分享网盘以及私人图床》 — 时光之笔&url=hxblog.top/post/6c13cd55.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/6c13cd55.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/6c13cd55.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

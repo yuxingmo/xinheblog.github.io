@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>C++笔记：关于const关键字 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="C++">
+    <meta name="description" content="常变量，常指针，指向常变量的指针以及常引用。">
+<meta name="keywords" content="C++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++笔记：关于const关键字">
+<meta property="og:url" content="hxblog.top/post/15616985.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="常变量，常指针，指向常变量的指针以及常引用。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-06-07T16:11:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C++笔记：关于const关键字">
+<meta name="twitter:description" content="常变量，常指针，指向常变量的指针以及常引用。">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">C++笔记：关于const关键字</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">C++笔记：关于const关键字</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-06-03T09:12:33.000Z" itemprop="datePublished" class="page-time">
+  2018-06-03
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-const的作用"><span class="post-toc-text">1 const的作用</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-常变量和常对象"><span class="post-toc-text">2 常变量和常对象</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-1-常变量"><span class="post-toc-text">2.1 常变量</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-常对象"><span class="post-toc-text">2.2 常对象</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-3-常数据成员与常成员函数"><span class="post-toc-text">2.3 常数据成员与常成员函数</span></a></li></ol></li></ol><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-常指针和指向常变量的指针"><span class="post-toc-text">3 常指针和指向常变量的指针</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-常指针"><span class="post-toc-text">3.1 常指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2-指向常变量的指针"><span class="post-toc-text">3.2 指向常变量的指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3-常变量与指向常变量的指针"><span class="post-toc-text">3.3 常变量与指向常变量的指针</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-数据及对象的常引用以及常变量的引用"><span class="post-toc-text">4  数据及对象的常引用以及常变量的引用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-在函数中的应用"><span class="post-toc-text">5 在函数中的应用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-1-指针"><span class="post-toc-text">5.1 指针</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-2-引用"><span class="post-toc-text">5.2 引用</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-总结"><span class="post-toc-text">6 总结</span></a>
+        </li></nav>
+    </aside>
+
+
+<article id="post-C-笔记：关于const关键字" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">C++笔记：关于const关键字</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-06-03 17:12:33" datetime="2018-06-03T09:12:33.000Z" itemprop="datePublished">2018-06-03</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/C/">C++</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>常变量，常指针，指向常变量的指针以及常引用。</p>
+<a id="more"></a>
+<h2 id="1-const的作用"><a href="#1-const的作用" class="headerlink" title="1 const的作用"></a>1 const的作用</h2><p> const关键字一般表示为常量。主要作用在于对共用数据的保护。将某个变量或者对象设为常量后，则无法使用函数或者语句来改变这个常变量或者常对象，以此来起到保护数据的作用</p>
+<h2 id="2-常变量和常对象"><a href="#2-常变量和常对象" class="headerlink" title="2 常变量和常对象"></a>2 常变量和常对象</h2><h3 id="2-1-常变量"><a href="#2-1-常变量" class="headerlink" title="2.1 常变量"></a>2.1 常变量</h3><p>常变量的定义方法如下：    </p>
+<pre><code>const 变量类型 变量名;
+</code></pre><p>以下这种定义方法等效：</p>
+<pre><code>变量类型 const 变量名;
+</code></pre><h3 id="2-2-常对象"><a href="#2-2-常对象" class="headerlink" title="2.2 常对象"></a>2.2 常对象</h3><p>常对象的定义方法如下：    </p>
+<pre><code>const 类名 对象名 (实参列表);
+</code></pre><p>以下这种定义方法等效：</p>
+<pre><code>类名 const 对象名 (实参列表);
+</code></pre><p>常对象需要注意的是：</p>
+<ul>
+<li>常对象其数据成员都不可以被改变，有特例，采用关键字mutable；</li>
+<li><strong>常对象不能调用其非const型的成员函数，不论这些非const型的成员函数是否改变对象的数据成员，只能用const型的成员函数。</strong>这是为了安全起见的，强制性规定这样，因为谁也不能保证那些非const函数是否真的不改变常对象的数据成员；</li>
+<li>常成员函数可以访问常对象中的数据，但是不允许修改常对象中的数据成员；</li>
+<li>常对象并不意味常对象里的数据成员都是常变量，两种是不同的概念；</li>
+<li>常对象里面可以有非const型的成员函数。但是常对象不能使用她们；</li>
+<li>常成员函数不能调用一个非const型的成员函数。</li>
+</ul>
+<h3 id="2-3-常数据成员与常成员函数"><a href="#2-3-常数据成员与常成员函数" class="headerlink" title="2.3 常数据成员与常成员函数"></a>2.3 常数据成员与常成员函数</h3><p><strong>常数据成员</strong>与一般的常变量的用法无异，即该数据成员的值是不能改变的。其声明需要在声明类的时候进行，因为限定的是类中的数据：</p>
+<pre><code>const 数据类型 变量名词；
+</code></pre><p>或者：</p>
+<pre><code>数据类型 const 变量名称；
+</code></pre><p><strong>常成员函数</strong>主要作用是为了配合常变量使用。因为常变量它只能使用常成员函数来访问对象的数据成员。</p>
+<p>声明同样是需要在声明类的时候进行，不难理解，与此同时，在定义函数的时候，也需要使用const关键字。因此它需要在两个地方使用const关键字：</p>
+<p>声明：</p>
+<pre><code>函数返回值类型 函数名（形参列表） const；
+</code></pre><p>例如：</p>
+<pre><code>void get_diff (int a, int b) const;
+</code></pre><p>定义：</p>
+<pre><code>函数返回值类型 函数名（形参列表） const {}
+</code></pre><p>例如：</p>
+<pre><code>void get_diff(int a, int b){ 
+    return (a-b);
+}
+</code></pre><p>需要注意的：</p>
+<ul>
+<li>对于常数据成员，只能通过构造函数的参数初始化表对常数据成员进行初始化；</li>
+</ul>
+<p>例如：</p>
+<pre><code>Time::Time（int h,int m, int s）:hour(h),minute(m),second(s){}
+</code></pre><p>而如下的做法是错误的：</p>
+<pre><code>Time::Time(int h){
+hour=h;
+}
+</code></pre><p>因为常数据成员及常变量是不能被赋值的， 只能在初始化的时候给值。</p>
+<ul>
+<li>const是函数类型的一部分，声明和定义都不能少，但是在调用的时候不能加上const关键字，按照普通函数一样调用即可。</li>
+</ul>
+<h1 id="3-常指针和指向常变量的指针"><a href="#3-常指针和指向常变量的指针" class="headerlink" title="3 常指针和指向常变量的指针"></a>3 常指针和指向常变量的指针</h1><p>这一块的内容非常容易被混淆，从核心上来理解：</p>
+<p><strong>常指针：</strong>是一个指针变量，并且这个东西是不能改变的。不能改变的是指针的地址，而不是地址指向的变量。</p>
+<p>打个比方：你有一套房子，这个房子的地理位置是永恒不变的，愚公移山这种特例不管，但是这个房子里住的人可不是永恒不变的，所有常指针，就类似于这个房子。</p>
+<p><strong>指向常变量的指针：</strong>首先这不是是一个普通的指针，他是指向常变量的指针，虽然它的值当然是可以改变的，也就是说它指向谁都是可以的，不是固定的。但是不能用它来改变它所指向变量的值。</p>
+<p>打个比方：这是一个可移动的房子，所以它的地址当然不是固定的，同时它既可以租给那些固执的人（const型的），也可以租给那些善变的（非const型的）。但是你却无法通过这个移动的房子去改变租客，尽管租客自己能改变自己。比喻有点牵强，但是能说明指向常变量的指针的特性。</p>
+<p>既然说到了常指针，又说到了指向常变量的指针，那当然存在一个指向常变量的常指针了。<br>这个比方非常好打，就是你有一套房子，只能给固定的人住，那么这个房子就是指向常变量（固定的人）的常指针（房子的地址不会改变）。</p>
+<p>说了理解部分的，下面是一些规矩。</p>
+<h2 id="3-1-常指针"><a href="#3-1-常指针" class="headerlink" title="3.1 常指针"></a>3.1 常指针</h2><p>声明：声明和初始化一起搞定。因为常指针也算是一个常变量，不能赋值，只能初始化。</p>
+<pre><code>变量类型 * const 指针变量名 = 指向的变量的地址
+</code></pre><p>例如：</p>
+<pre><code>int a = 10 ;
+int * const p = &a; 
+</code></pre><p>除了用在变量上，当然还可以用在类上。也就是指向类的常指针。</p>
+<p>声明和指向变量的常指针没什么两样：</p>
+<pre><code>类名 * const 指针变量名 = 对象地址
+</code></pre><p>例如：</p>
+<pre><code>Time t1(10,30,55);
+Time * const pt = &t1;
+</code></pre><h2 id="3-2-指向常变量的指针"><a href="#3-2-指向常变量的指针" class="headerlink" title="3.2 指向常变量的指针"></a>3.2 指向常变量的指针</h2><p>声明：</p>
+<pre><code>const 类型名 * 指针名；
+</code></pre><p>或者指向常对象的指针：</p>
+<pre><code>const 类名 * 指针名
+</code></pre><h2 id="3-3-常变量与指向常变量的指针"><a href="#3-3-常变量与指向常变量的指针" class="headerlink" title="3.3 常变量与指向常变量的指针"></a>3.3 常变量与指向常变量的指针</h2><p>首先要区别常指针和指向常变量的指针。这在开始已经介绍过，简单的来说其实可以归结为两句话：</p>
+<ul>
+<li>指向常变量的指针——不能通过指针改变变量的值</li>
+<li>指向变量的常指针——不能改变指针的值</li>
+</ul>
+<p>其次，还有几点需要注意：</p>
+<ul>
+<li>常变量必须要用指向常变量的指针变量来指向它</li>
+<li>指向常变量的指针既可以指向常变量，也可以指向普通变量。只是不能通过指针来改变所指向变量的值</li>
+</ul>
+<p>以下几个例子可以说明一定的问题：</p>
+<pre><code>int a=10;
+int * const p1=&a;//指向变量a的常指针，必须在声明时赋值
+int b=20;
+p1=&b;//这是错误的，p是常指针，不能改变
+
+
+const int c=100；
+int *p2=&c;//错误，常变量不能用普通指针来指向它
+int * const p3=&c;//错误，常变量也不能用常指针来指向它
+const int *p4=&c;//正确，常变量必须要用指向常变量的指针来指向它
+int d=200;
+p4=&d;//正确，指向常变量的指针也可以只想非const变量
+*p=300;//错误，不能通过指向常变量的指针来改变所指向的变量
+d=300;//正确
+</code></pre><h1 id="4-数据及对象的常引用以及常变量的引用"><a href="#4-数据及对象的常引用以及常变量的引用" class="headerlink" title="4  数据及对象的常引用以及常变量的引用"></a>4  数据及对象的常引用以及常变量的引用</h1><p>const引用的声明如下：</p>
+<pre><code>const 类型 &引用名=被应用的变量;  //引用在声明时必须要初始化
+</code></pre><p>首先回到引用的本质，引用即别名。也就是说引用是不能更改的，即一个别名不能用在两个人身上，也不能把一个别人用过的别名用到其他人身上。这就是说，引用一旦初始化后，和被引用的变量终生绑定。从这个特质来看，有点像常指针。指向那个对象，就得一直指向它。</p>
+<p>值得注意的是：一个变量可以取多个别名啊~~~只是一个别名只能用在一个人身上。</p>
+<p>而const引用则类似于指向常变量的常指针（<strong>注意这里不是指向常变量的指针，后者可以先后不止指向一个值</strong>）。也就是const引用既可以引用普通的变量，也能引用const变量。但是，这一点非常重要，和指向常变量的指针一样，不能通过const引用来改变其引用的变量的值。</p>
+<p>来看例子：</p>
+<pre><code>int a=10;
+const int b=20;
+int & c1=a;//没毛病
+const int & c2=a; //没毛病，常引用自然可以引用非const变量
+int & c3=b;//错误，常量必须要用常引用来引用
+const int &c4=b;//没毛病，常量用常引用来引用
+c2=30;//错误，虽然c2指向的a不是常变量，但是不能通过常引用来改变它的值
+a=30;//没毛病，给他取个常引用的别名并不能让他成为常变量
+</code></pre><p>结论：常变量必须要用常引用，常引用可以引用常变量也可以引用非常变量，但是不能通过常引用来改变所引用的变量的值。</p>
+<h1 id="5-在函数中的应用"><a href="#5-在函数中的应用" class="headerlink" title="5 在函数中的应用"></a>5 在函数中的应用</h1><h2 id="5-1-指针"><a href="#5-1-指针" class="headerlink" title="5.1 指针"></a>5.1 指针</h2><ul>
+<li>如果函数的形参是指向非const型变量的指针，那么实参不能传递一个const变量的地址吗，也不能使用指向const变量的指针（即使其指向的对象是非const的）。只能用指向非const变量的指针，或者是非const变量的地址，当然，也可以是指向非const变量的常指针。这是因为传递过去的地址可能会在函数调用中改变该地址所指向变量的值，采用指向const变量的指针或者传递一个const变量的地址这都无法改变其所指向变量的值，这样会发生冲突，而在编译时编译器往往不能知道函数是否会改变其所指变量的值，因此从语法上就规避掉了这个危险。</li>
+<li>如果函数的形参是指向const型变量的指针，那么实参可以是指向const变量的值，也同时是指向非const变量的指针，可以是const变量的地址，也可以是非const变量的地址。这个很好理解，由于形参是指向const型变量的指针，那么在函数调用的过程中，永远不会改变其所指对象的值。因此实参用const类型的地址当然是没问题的，用非const类型的地址更没问题。非const类型可没说一定要改，不改当然也没问题。</li>
+</ul>
+<h2 id="5-2-引用"><a href="#5-2-引用" class="headerlink" title="5.2 引用"></a>5.2 引用</h2><ul>
+<li><p>如果形参是普通的引用，那么实参必须传递一个普通的变量地址或者普通的引用，不能传递const引用，这点和指针的情况一样</p>
+</li>
+<li><p>如果形参是const引用，那么实参既可以是普通的变量地址或普通的引用，也可以是const引用</p>
+</li>
+</ul>
+<h1 id="6-总结"><a href="#6-总结" class="headerlink" title="6 总结"></a>6 总结</h1><p>const这个关键字，一般用来保护数据。体现在两个方面：</p>
+<p>第一个方面，用于声明const常量或者常对象，由于不可改变的属性，可以用来保护数据本身不被更改；</p>
+<p>第二个方面，在于函数调用这一块。C++中，尤其是面向对象的时候，传址是更简洁有效的，这样不会需要临时的存储空间。但是传址会存在一个问题，那就是遇到不想改变的值，会有风险。于是就有了指向常变量（常对象）的指针，和常引用。</p>
+<p>如果需要保证数据在调用函数的过程中不被改变，需要将函数的形参声明为const指针或者引用，这样传址过来可以保证在函数调用的时候不会改变。如果需要保证数据在整个程序都不会改变，则需要将函数的形参声明为const，并且实参也应该声明为const，这样可以万无一失了。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-06-07T16:11:25.000Z" itemprop="dateUpdated">2018-06-08 00:11:25</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/C/">C++</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/15616985.html&title=《C++笔记：关于const关键字》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/15616985.html&title=《C++笔记：关于const关键字》 — 时光之笔&source=常变量，常指针，指向常变量的指针以及常引用。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/15616985.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++笔记：关于const关键字》 — 时光之笔&url=hxblog.top/post/15616985.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/15616985.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/72b05b11.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">C++笔记：对象的动态建立和释放</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/bd44de2.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">C++笔记：类初步</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/15616985.html&title=《C++笔记：关于const关键字》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/15616985.html&title=《C++笔记：关于const关键字》 — 时光之笔&source=常变量，常指针，指向常变量的指针以及常引用。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/15616985.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《C++笔记：关于const关键字》 — 时光之笔&url=hxblog.top/post/15616985.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/15616985.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/15616985.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

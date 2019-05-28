@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习笔记：Palabosos（4）：边界条件 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="LBM,Palabos">
+    <meta name="description" content="边界条件分为两种，一种是和网格对齐的，直线型的边界条件。一种则是弯曲型的边界条件。这两种边界条件，都可以在Palabos里面轻松实现。">
+<meta name="keywords" content="LBM,Palabos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记：Palabosos（4）：边界条件">
+<meta property="og:url" content="hxblog.top/post/8fa2b4d0.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="边界条件分为两种，一种是和网格对齐的，直线型的边界条件。一种则是弯曲型的边界条件。这两种边界条件，都可以在Palabos里面轻松实现。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/22/V9bzTg.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/23/VCdIbD.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/23/VPSXrj.gif">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/27/VZYAIO.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/05/27/VZvvzq.png">
+<meta property="og:updated_time" content="2019-05-27T14:26:09.335Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习笔记：Palabosos（4）：边界条件">
+<meta name="twitter:description" content="边界条件分为两种，一种是和网格对齐的，直线型的边界条件。一种则是弯曲型的边界条件。这两种边界条件，都可以在Palabos里面轻松实现。">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/05/22/V9bzTg.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习笔记：Palabosos（4）：边界条件</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习笔记：Palabosos（4）：边界条件</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-22T13:02:05.000Z" itemprop="datePublished" class="page-time">
+  2019-05-22
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-网格对齐边界"><span class="post-toc-text">1 网格对齐边界</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-OnLatticeBoundaryConditionXD类"><span class="post-toc-text">1.1 OnLatticeBoundaryConditionXD类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-常规矩形域的边界"><span class="post-toc-text">1.2 常规矩形域的边界</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-BcType"><span class="post-toc-text">1.3 BcType</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-4-在Dirichlet边界上设置速度或压力值"><span class="post-toc-text">1.4 在Dirichlet边界上设置速度或压力值</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-5-内部的和外部的边界条件"><span class="post-toc-text">1.5 内部的和外部的边界条件</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-6-总结"><span class="post-toc-text">1.6 总结</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-周期性边界"><span class="post-toc-text">2 周期性边界</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-反弹边界条件"><span class="post-toc-text">3 反弹边界条件</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-Bounce-Back-1-VS-Bounce-Back-2"><span class="post-toc-text">3.1 Bounce-Back 1 VS  Bounce-Back 2</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2-根据域类定义边界域"><span class="post-toc-text">3.2  根据域类定义边界域</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3-基于布尔运算符的反弹域的定义"><span class="post-toc-text">3.3  基于布尔运算符的反弹域的定义</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-问题"><span class="post-toc-text">4 问题</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-学习笔记：Palabosos（4）：边界条件" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习笔记：Palabosos（4）：边界条件</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-22 21:02:05" datetime="2019-05-22T13:02:05.000Z" itemprop="datePublished">2019-05-22</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>边界条件分为两种，一种是<strong>和网格对齐的</strong>，直线型的边界条件。一种则是<strong>弯曲型的边界条件</strong>。这两种边界条件，都可以在Palabos里面轻松实现。</p>
+<a id="more"></a>
+<h1 id="1-网格对齐边界"><a href="#1-网格对齐边界" class="headerlink" title="1 网格对齐边界"></a>1 网格对齐边界</h1><h2 id="1-1-OnLatticeBoundaryConditionXD类"><a href="#1-1-OnLatticeBoundaryConditionXD类" class="headerlink" title="1.1 OnLatticeBoundaryConditionXD类"></a>1.1 OnLatticeBoundaryConditionXD类</h2><p>有一些边界条件是局部的，这种情况用Dynamic实现，有些是非局部的，这种通常会产生复合Dynamic，通常要借助于数据处理器。OnLatticeBoundaryConditionXD类相当于提供了一个统一的接口，不管是局部的还是非局部的，或者是这两者都有，这取决于采用的边界条件。不过，不管是什么情况OnLatticeBoundaryConditionXD都有相应的解决方案。</p>
+<p>比如可以用下面的语句来实例化一个Zou/He边界条件：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">OnLatticeBoundaryCondition3D < T ，DESCRIPTOR > *  boundaryCondition  = </span><br><span class="line">        createZouHeBoundaryCondition3D < T ，DESCRIPTOR > （）;</span><br></pre></td></tr></tbody></table></figure>
+<p>创建了一个OnLatticeBoundaryCondition3D类的指针boundaryCondition，采用的是createZouHeBoundaryCondition3D方法。createZouHeBoundaryCondition3D函数不属于任何类，位于plb里面的一个函数。其定义为：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> BoundaryConditionInstantiator3D <</span><br><span class="line"> T, Descriptor,</span><br><span class="line"> WrappedZouHeBoundaryManager3D<t,descriptor> > ();</t,descriptor></span><br></pre></td></tr></tbody></table></figure>
+<p>可见是返回一个BoundaryConditionInstantiator3D对象。</p>
+<p>而BoundaryConditionInstantiator3D对象又是OnLatticeBoundaryCondition3D的子类。继承关系如下图：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/22/V9bzTg.png" alt="OnLatticeBoundaryCondition3D的继承关系" title>
+                </div>
+                <div class="image-caption">OnLatticeBoundaryCondition3D的继承关系</div>
+            </figure>
+<p>Zou/He是用的相当多的一种边界条件。处理速度、密度、压力边界条件的一种方法。属于非平衡态反弹格式。具有二阶精度和良好的数值稳定性。</p>
+<p>目前通过OnLatticeBoundaryConditionXD可以实现的边界条件方法有四种：</p>
+<table>
+<thead>
+<tr>
+<th>BC</th>
+<th>Method</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regularized BC</td>
+<td>createLocalBoundaryConditionXD</td>
+</tr>
+<tr>
+<td>Skordos BC</td>
+<td>createInterpBoundaryConditionXD</td>
+</tr>
+<tr>
+<td>Zou/He BC</td>
+<td>createZouHeBoundaryConditionXD</td>
+</tr>
+<tr>
+<td>Inamuro BC</td>
+<td>createInamuroBoundaryConditionXD</td>
+</tr>
+</tbody>
+</table>
+<p>四种边界条件的简要介绍可以看<a href="http://wiki.palabos.org/models:bc" target="_blank" rel="noopener">官方文档</a>。</p>
+<p>利用这些边界条件，可以实现速度Dirichlet边界（所有速度分量具有强加值）和压力边界（施加压力，并且切向速度分量为零）。此外，提出了各种类型的Neumann边界条件。在这些情况下，通过从相邻单元复制该变量的值，以一阶精度施加给定变量的零梯度边界条件。</p>
+<p><strong>注：Dirichlet边界条件指函数本身在边界上给定，Neumann边界条件指函数的法向导数在边界上给定。</strong></p>
+<h2 id="1-2-常规矩形域的边界"><a href="#1-2-常规矩形域的边界" class="headerlink" title="1.2 常规矩形域的边界"></a>1.2 常规矩形域的边界</h2><p>这种应该是最多的吧，求解域是一个矩形，或者是一个立方体。</p>
+<p>所有OnLatticeBoundaryConditionXD对象都有两个方法：setVelocityConditionOnBlockBoundaries和setPressureConditionOnBlockBoundaries，用于<strong>设置位于矩形域上的边界</strong>。如果给定2D框边界框边界上的所有节点都实现了Dirichlet条件，请使用以下命令：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Box2D <span class="title">boundaryBox</span><span class="params">(x0,x1, y0,y1)</span></span>;</span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries (</span><br><span class="line">   lattice, boundaryBox, locationOfBoundaryNodes );</span><br></pre></td></tr></tbody></table></figure>
+<p>这里先是指定了一个boundaryBox，这个boundaryBox就是边界框了。boundaryCondition其实就是此前创建的那个OnLatticeBoundaryConditionXD对象。在这里调用了这个对象的方法setVelocityConditionOnBlockBoundaries。来看看这个方法对用的声明：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span><<span class="keyword">typename</span> U> <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"> <span class="title">void</span> ‪<span class="title">OnLatticeBoundaryCondition2D</span><t,descriptor>:</t,descriptor></span>:setVelocityConditionOnBlockBoundaries (</span><br><span class="line">         ‪BlockLattice2D<t,descriptor>& lattice,</t,descriptor></span><br><span class="line">         ‪Box2D block, ‪Box2D applicationDomain,</span><br><span class="line">         ‪boundary::BcType bcType )</span><br></pre></td></tr></tbody></table></figure>
+<p>结合声明可以知道，第一个参数lattice表示的是创建边界条件所在的block-lattice区域。第二个boundaryBox表示的边界所作用的是一个矩形区域。第三个参数locationOfBoundaryNodes实际上也是一个BoxXD类，它的作用你可以把他看成是一个选择框。如下图所示。locationOfBoundaryNodes 通常用的是一个边。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/23/VCdIbD.png" alt="VCdIbD.png" title>
+                </div>
+                <div class="image-caption">VCdIbD.png</div>
+            </figure>
+<p>第四个参数boundary::BcType省略掉了，这是因为有默认参数：dirichlet。所以，除非不是dirichlet条件，可以不需要明指出具体的BcType。BcType是一个枚举类型：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span>  	BcType { </span><br><span class="line">  dirichlet, neumann, freeslip, density, </span><br><span class="line">  outflow, normalOutflow </span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>如果lattice的外框中的某条边作为边界条件，那么代码可以简化如下：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boundaryCondition - > setVelocityConditionOnBlockBoundaries （lattice ， locationOfBoundaryNodes ）;</span><br></pre></td></tr></tbody></table></figure>
+<p>这里的locationOfBoundaryNodes 就是一条边。而如果lattice的外框都是边界条件，并且是同样的，那么代码可以写成：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boundaryCondition - > setVelocityConditionOnBlockBoundaries （lattice ）;</span><br></pre></td></tr></tbody></table></figure>
+<p>现在，假设长为nx，宽慰ny的block-lattice中的上壁和下壁（包括角）实现自由滑动条件（切向速度分量为零梯度），左壁为Dirichlet条件，右壁为流出条件（所有速度分量的零梯度）。则代码实现为：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Box2D <span class="title">inlet</span><span class="params">(<span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, ny<span class="number">-2</span>)</span></span>;<span class="comment">//入口</span></span><br><span class="line"><span class="function">Box2D <span class="title">outlet</span><span class="params">(nx<span class="number">-1</span>, nx<span class="number">-1</span>, <span class="number">2</span>, ny<span class="number">-2</span>)</span></span>;<span class="comment">//出口</span></span><br><span class="line"><span class="function">Box2D <span class="title">bottomWall</span><span class="params">(<span class="number">0</span>, nx<span class="number">-1</span>, <span class="number">0</span>, <span class="number">0</span>)</span></span>;<span class="comment">//上壁面</span></span><br><span class="line"><span class="function">Box2D <span class="title">topWall</span><span class="params">(<span class="number">0</span>, nx<span class="number">-1</span>, ny<span class="number">-1</span>, ny<span class="number">-1</span>)</span></span>;<span class="comment">//下壁面</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//默认Dirichlet条件</span></span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries ( lattice, inlet );</span><br><span class="line"></span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries (</span><br><span class="line">                               lattice, outlet, boundary::outflow );</span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries (</span><br><span class="line">                               lattice, bottomWall, boundary::freeslip );</span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries (</span><br><span class="line">                               lattice, topWall, boundary::freeslip );</span><br></pre></td></tr></tbody></table></figure>
+<p>如果边界条件不在lattice的外边，那么需要增加一个BoxXD来进行限定。就像那种最复杂的情况。</p>
+<h2 id="1-3-BcType"><a href="#1-3-BcType" class="headerlink" title="1.3 BcType"></a>1.3 BcType</h2><p>前面提到，BcType是一个命名空间<code>plb:boundary</code>下面的枚举类型。下面是各种不同边界条件的物理含义。</p>
+<table>
+<thead>
+<tr>
+<th>velocity boundaries</th>
+<th style="text-align:right">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boundary::dirichlet (default value)</td>
+<td style="text-align:right">Dirichlet condition: imposed velocity value.</td>
+</tr>
+<tr>
+<td>boundary::outflow or boundary::neumann</td>
+<td style="text-align:right">Zero-gradient for all velocity components.</td>
+</tr>
+<tr>
+<td>boundary::freeslip</td>
+<td style="text-align:right">Zero-gradient for tangential velocity components, zero value for the others.</td>
+</tr>
+<tr>
+<td>boundary::normalOutflow</td>
+<td style="text-align:right">Zero-gradient for normal velocity components, zero value for the others.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>pressure boundaries</th>
+<th style="text-align:right">Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>boundary::dirichlet (default value)</td>
+<td style="text-align:right">Dirichlet condition: imposed pressure value, zero value for the tangential velocity components.</td>
+</tr>
+<tr>
+<td>boundary::neumann</td>
+<td style="text-align:right">Zero-gradient for the pressure, zero value for the tangential velocity components.</td>
+</tr>
+</tbody>
+</table>
+<p>值得注意的是：<strong>边界条件不能被覆盖</strong></p>
+<p>无法覆盖边界的类型。一旦边界条件被定义为是Dirichlet速度边界条件，它就会保持Dirichlet速度边界条件。将其重新定义为别的边界条件是没有用的。因此，必须仔细定义边界条件，并且分段定义，如上例所示。</p>
+<p>不过定义的边界条件的数值是可以随时改变的。</p>
+<h2 id="1-4-在Dirichlet边界上设置速度或压力值"><a href="#1-4-在Dirichlet边界上设置速度或压力值" class="headerlink" title="1.4 在Dirichlet边界上设置速度或压力值"></a>1.4 在Dirichlet边界上设置速度或压力值</h2><p>使用函数setBoundaryVelocity施加恒定速度值。以下命令在2D域的所有节点上将速度值设置为零，这些节点之前已被定义为Dirichlet速度节点：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setBoundaryVelocity(lattice, lattice.getBoundingBox(), Array<t,<span class="number">2</t,<span></span>>(<span class="number">0.</span>,<span class="number">0.</span>) );<br></pre></td></tr></tbody></table></figure>
+<p>然而在其他的节点，这个命令没有作用。</p>
+<p>如果是要设定压力边界条件，可以采用以下命令：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setBoundaryDensity(lattice, lattice.getBoundingBox(), <span class="number">1.</span> );</span><br></pre></td></tr></tbody></table></figure>
+<p>在LBM中压力和密度是直接挂钩的，因此设置压力其实就是设置密度。</p>
+<p>时变的，与空间相关的速度和压力边界条件也可以实现。具体参考案例：examples/showCases/poiseuille/poiseuille.cpp. 即伯肃叶流动。</p>
+<p>值得注意的是，setBoundaryVelocity属于plb下定义的公共函数，不属于任何类。</p>
+<h2 id="1-5-内部的和外部的边界条件"><a href="#1-5-内部的和外部的边界条件" class="headerlink" title="1.5 内部的和外部的边界条件"></a>1.5 内部的和外部的边界条件</h2><p>有时，边界不位于规则的块状区域的表面上。在这种情况下，setVelocityConditionOnBlockBoundaries等函数是无用的，并且必须手动构造边界。下面是一个例子，介绍如何手动构建沿顶壁的自由滑动条件，包括角节点：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// The automatic creation of a top-wall ...</span></span><br><span class="line"><span class="function">Box2D <span class="title">topWall</span><span class="params">(<span class="number">0</span>, nx<span class="number">-1</span>, ny<span class="number">-1</span>, ny<span class="number">-1</span>)</span></span>;</span><br><span class="line">boundaryCondition->setVelocityConditionOnBlockBoundaries (</span><br><span class="line">                               topWall, lattice, boundary::freeslip );</span><br><span class="line"></span><br><span class="line"><span class="comment">// can be replaced by a manual construction as follows:</span></span><br><span class="line"><span class="function">Box2D <span class="title">topLid</span><span class="params">(<span class="number">1</span>, nx<span class="number">-2</span>, ny<span class="number">-1</span>, ny<span class="number">-1</span>)</span></span>;</span><br><span class="line">boundaryCondition->addVelocityBoundary1P( topLid, lattice, boundary::freeslip );</span><br><span class="line">boundaryCondition->addExternalVelocityCornerNP( <span class="number">0</span>, ny<span class="number">-1</span>, lattice, boundary::freeslip );</span><br><span class="line">boundaryCondition->addExternalVelocityCornerPP( nx<span class="number">-1</span>, ny<span class="number">-1</span>, lattice, boundary::freeslip );</span><br></pre></td></tr></tbody></table></figure>
+<p>第一组代码，是自己定义了一个topWall。可以看到这其实就是一个2Dbox的顶线。</p>
+<p>第二组代码，用的不是setVelocityConditionOnBlockBoundaries这个方法，而是里面对顶线和角点分别进行边界条件设定的方法。topLid也是一个边，只是不包含两边的角点。</p>
+<p>根据角落是凸面还是凹面，区分外角和内角。如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/23/VPSXrj.gif" alt="内角点和外角点" title>
+                </div>
+                <div class="image-caption">内角点和外角点</div>
+            </figure>
+<p>对于addVelocityBoundary1P后面的1P，其实是代表了边的方向，你可以理解成边的法向量。这样的后缀还有0P，0N，1N。加上1P一共是四个。</p>
+<ul>
+<li>代码1P表示：“墙法线指向正y方向”</li>
+<li>代码0N标记为“负x方向”</li>
+<li>代码1N表示正x方向</li>
+<li>代码0P表示y负方向</li>
+<li>一般边界的法向量都是指向流场的外面。这和边界条件设定为入口还是出口没有任何关系，这些后缀代表的就是纯几何上的法向量。</li>
+</ul>
+<p>在3D中也有类似的东西。</p>
+<p>在后面的文章中我会对这些做一个更为细致的介绍。</p>
+<h2 id="1-6-总结"><a href="#1-6-总结" class="headerlink" title="1.6 总结"></a>1.6 总结</h2><p>总结一下设置速度和压力边界条件，以及outflow这种边界条件的基本方法。</p>
+<ul>
+<li>首先，要定义一个接口，也就是定义一个OnLatticeBoundaryConditionXD类。采用不同的边界类型算法，采用不同的初始化方法，比如，要让边界采用Zou/H算法来定义计算边界条件，就用createZouHeBoundaryConditionXD来进行初始化；</li>
+<li>得到了这个接口之后，调用创建好的这个接口下的成员函数：setVelocityConditionOnBlockBoundaries或者setPressureConditionOnBlockBoundaries，来指定某个边界的类型。其中，指定的边界可能需要某种方式去进行构建；</li>
+<li>采用plb:setBoundaryVelocity()这样的方法来设定边界上的具体数值。</li>
+</ul>
+<p>至此，完成了边界条件的设定。</p>
+<h1 id="2-周期性边界"><a href="#2-周期性边界" class="headerlink" title="2 周期性边界"></a>2 周期性边界</h1><p>这部分因为没有详细了解过，所以先挖坑吧。</p>
+<p><a href="http://www.palabos.org/documentation/userguide/boundary-conditions.html#periodic-boundaries" target="_blank" rel="noopener">文档</a></p>
+<h1 id="3-反弹边界条件"><a href="#3-反弹边界条件" class="headerlink" title="3 反弹边界条件"></a>3 反弹边界条件</h1><p>首先，<strong>反弹边界条件主要用于对wall实现不可滑移边界条件的实现</strong>。</p>
+<p>Palabos里面的反弹边界条件的执行方法分为2种：<code>Bounce-Back 1</code>和<code>Bounce-Back 2</code>。</p>
+<p>从<a href="http://www.palabos.org/documentation/userguide/boundary-conditions.html#bounce-back" target="_blank" rel="noopener">文档</a>的解读可以知道：<code>Bounce-Back 1</code>实际上对应的是 halfway bounce-back。<code>Bounce-Back 2</code>对应的是 fullway bounce-back。</p>
+<p>需要注意的是，不管是<code>Bounce-Back 1</code>还是<code>Bounce-Back 2</code>，都模拟的是<strong>边界位于固体节点和流体节点的中间位置</strong>。如下图所示：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/27/VZYAIO.png" alt="Bounce-Back 1 VS Bounce-Back 2" title>
+                </div>
+                <div class="image-caption">Bounce-Back 1 VS Bounce-Back 2</div>
+            </figure>
+<p>其中图a表示的是<strong>全步长反弹</strong>，也就是<code>Bounce-Back 2</code>，图b表示的是<strong>半步长反弹</strong>，也就是<code>Bounce-Back 1</code>。下面来看看这两者到底有什么区别。</p>
+<p>注意：图片来自于文献[1]。</p>
+<h2 id="3-1-Bounce-Back-1-VS-Bounce-Back-2"><a href="#3-1-Bounce-Back-1-VS-Bounce-Back-2" class="headerlink" title="3.1 Bounce-Back 1 VS  Bounce-Back 2"></a>3.1 Bounce-Back 1 VS  Bounce-Back 2</h2><ul>
+<li><code>Bounce-Back 1</code>是一种半步长反弹（HBC）。</li>
+</ul>
+<p>官方文档里指出，这种算法是在边界节点邻近的流体节点进行下一次的碰撞之前，该点的分布函数取上一次碰撞结束后的相反方向的分布函数值，用公式来表达，就是：</p>
+<p>$f_{3}\left(x_{N}, t+\Delta t\right)=f_{1}^{\star}\left(x_{N}, t\right)$</p>
+<p>其中<strong>带星号的分布函数是代表着进行碰撞后得到的值，而不是迁移后得到的值</strong>。此外，f1和f3的方向是相反的。</p>
+<p>由这个式子及上门的图b可以看到，HBC里面，<strong>边界节点是不进行碰撞和迁移的，你可以认为它不对计算起任何作用，也就是说边界节点不用存储任何变量或数值</strong>。迁移只在流体节点进行，标准碰撞也只发生在流体节点。此外，靠近边界的这个流体节点迁移不到边界，而是直接反弹了回来。也就是说本来应该有边界迁移过来出来的分布函数，直接在该流体节点反弹了回来。这个分布函数作为下一次碰撞的初始条件。</p>
+<p>也可以说，<strong>这种算法，反弹是发生在流体节点和固体节点中间的位置。改变了邻近边界节点的流体节点的迁移步骤</strong></p>
+<ul>
+<li><code>Bounce-Back 2</code>是一种全步长反弹（FBC）。</li>
+</ul>
+<p>文档中写到，如果将这种反弹的发生地点指定在固体节点中（文档是说的新的节点，实际上就是固体节点），这样，这些节点亦不发生碰撞，而是将碰撞过程代替为反弹过程。注意，这和HBC有一个很大的区别，<strong>要在固体边界上执行反弹</strong>。这些节点被视为纯算法节点，不具备真实的物理意义，<strong>也就是根据这些固体节点计算得到的宏观量（密度，动量）是不准确的。这是由于固体节点只起到一个反弹边界的作用</strong>。</p>
+<p>用公式表达那么就是如下：</p>
+<ol>
+<li>碰撞完成之后，正常迁移至边界节点：</li>
+</ol>
+<p>$f_{1}\left(x_{N+1}, t\right)=f_{1}^{\star}\left(x_{N}, t-\Delta t\right)$</p>
+<ol start="2">
+<li>边界节点执行反弹规则，实际上是用反弹替换了碰撞：</li>
+</ol>
+<p>$f_{3}^{\star}\left(x_{N+1}, t\right)=f_{1}\left(x_{N+1}, t\right)$</p>
+<ol start="3">
+<li>反弹完成之后，将该分布函数迁移至流体，作为下一次碰撞的初始值：</li>
+</ol>
+<p>$f_{3}\left(x_{N}, t+\Delta t\right)=f_{3}^{\star}\left(x_{N+1}, t\right)$</p>
+<p>从这些式子，并结合上图可以看到，边界节点不执行碰撞，而是利用反弹来对其进行替换。<strong>也就是说，反弹改变了边界节点的碰撞环节，但是并不改变它的迁移环节。</strong></p>
+<p><strong>总结一下：</strong></p>
+<ul>
+<li><code>Bounce-Back 2</code>是全步长反弹，其对<strong>时间精度为1阶</strong>。<code>Bounce-Back 1</code>是半步长反弹，对<strong>时间精度为2阶</strong>；</li>
+<li><code>Bounce-Back 2</code><strong>需要固体边界节点</strong>，用于存储执行边界反弹和迁移步骤所需要的分布函数。而<code>Bounce-Back 1</code><strong>不需要边界节点存储任何变量</strong>；</li>
+<li><code>Bounce-Back 2</code><strong>在边界节点上</strong>执行正常的迁移，但是<strong>碰撞环节被反弹环节所取代</strong>，至于靠近边界节点的流体节点，不改变任何运作方式；而<code>Bounce-Back 1</code><strong>在靠近边界节点的流体节点上</strong>执行正常的碰撞，但是<strong>迁移环节有所改变</strong>，本应由边界传递而来的分布函数在这里取值为与其相反方向的碰撞后的分布函数。<strong>注意，不是进过迁移后的分布函数</strong>。这也就意味着，<strong>在执行碰撞之后需要对靠近边界节点的流体节点在那些本应该从边界获得的分布函数进行先赋值，以免迁移过程中发生数值覆盖</strong>。</li>
+</ul>
+<p>事实上，关于这两种碰撞方法的问题，困扰了我将近五天。</p>
+<p>这个问题的复杂在于并不知道<code>Bounce-Back 1</code>和<code>Bounce-Back 2</code>到底代表的什么算法。实际上反弹规则还有很多种，分类方法也不一样，除了全步长和半步长反弹外，根据边界位于节点的哪个位置，有内推移法和外推移法，还有边界就位于边界节点的方法。此外，根据边界节点是否执行标准碰撞过程，还分为标准反弹和修正反弹格式。最终在Krüger, T.K.H.K.等于2017年的出版的书籍上获得了关于半步长和全步长的最为清晰的解答。也为此确定了<code>Bounce-Back 1</code>和<code>Bounce-Back 2</code>的运行机理。</p>
+<p>关于这本书，大家可以在Google找到并且看到，由于版权原因，这里就不进行分享了，<strong>如果找不到可以取置顶文章里找的本博客的群，在群里询问群主</strong>。这本书写的很好，很有深度。广度也不错，我认为是这么多年来看到写的最好的一本关于LBM的教材，教材里面的内容也比较新，能跟得上时代，推荐初学者。</p>
+<h2 id="3-2-根据域类定义边界域"><a href="#3-2-根据域类定义边界域" class="headerlink" title="3.2  根据域类定义边界域"></a>3.2  根据域类定义边界域</h2><p>为了描述一个反弹域，一般是需要确定这个反弹域对应的节点。推荐采用继承一个DomainFunctionalXD类来进行。DomainFunctionalXD是一个矩形或者是立方体的域，其内包含了私有成员变量_iX_和_iX_（或者还有_iX_）。文档中的例子是继承DomainFunctional2D类，创建了一个圆形类，并且重写了operator方法，这个operator方法的作用是获得边界所在的边界节点。</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CylinderShapeDomain2D</span> :</span> <span class="keyword">public</span> DomainFunctional2D {</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    CylinderShapeDomain2D(plint cx_, plint cy_, plint radius)</span><br><span class="line">        : cx(cx_),</span><br><span class="line">          cy(cy_),</span><br><span class="line">          radiusSqr(util::sqr(radius))</span><br><span class="line">    { }</span><br><span class="line">    <span class="comment">// The function-call operator is overridden to specify the location</span></span><br><span class="line">    <span class="comment">//   of bounce-back nodes.</span></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span> <span class="params">(plint iX, plint iY)</span> <span class="keyword">const</span> </span>{</span><br><span class="line">        <span class="keyword">return</span> util::sqr(iX-cx) + util::sqr(iY-cy) <= radiussqr;< span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">virtual</span> CylinderShapeDomain2D<t>* clone() <span class="keyword">const</span> {</t></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CylinderShapeDomain2D<t>(*<span class="keyword">this</span>);</t></span><br><span class="line">    }</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    plint cx, cy;</span><br><span class="line">    plint radiusSqr;</span><br><span class="line">};</span><br></=></span></pre></td></tr></tbody></table></figure>
+<p>对这样的一个区域定义动态的语句为：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">defineDynamics( lattice, lattice.getBoundingBox(),</span><br><span class="line">                <span class="keyword">new</span> CylinderShapeDomain2D<t>(cx, cy, radius),</t></span><br><span class="line">                <span class="keyword">new</span> BounceBack<t,descriptor> );</t,descriptor></span><br></pre></td></tr></tbody></table></figure>
+<p>这里调用了一个函数：defineDynamics。属于plb。第一个参数是各自域，第二个是这个各自域的所构成的Box2D，第三个是一个域类，也就是上面定义的CylinderShapeDomain2D类，第四个是BounceBack动态。<strong>反弹节点位于这个lattice.getBoundingBox()和定义的CylinderShapeDomain2D相交的单元格。</strong></p>
+<p>如果边界域被指定为更简单域集合的并集，则可以在每个更简单的域上迭代使用defineDynamics()，<a href="http://palabos.asce.top/namespaceplb.html#adf8dbb91362ea5b45ee0f7ffdbc48208" target="_blank" rel="noopener">文档</a>中写到了一共有15种形式的defineDynamics()。如果域是更简单域的交集或任何其他几何操作，则需要在域功能的定义内使用布尔运算符。</p>
+<h2 id="3-3-基于布尔运算符的反弹域的定义"><a href="#3-3-基于布尔运算符的反弹域的定义" class="headerlink" title="3.3  基于布尔运算符的反弹域的定义"></a>3.3  基于布尔运算符的反弹域的定义</h2><p>假设域的几何形状是从外部源规定的。例如，当模拟多孔介质并拥有来自所讨论的多孔材料的扫描数据时。这种最简单的方法是<strong>将此数据存储为ASCII文件</strong>，该文件将流体节点与实体节点区分为0和1，用空格，制表符或换行符分隔。该文件表示常规数组的内容，仅存储原始数据，不存储矩阵维度的信息。数据布局必须与Palabos中的相同：z坐标的增量表示文件中的连续进度（在3D中），然后是y坐标，然后是x坐标。只需将该数据从文件刷新到标量字段即可。以下代码取自示例examples / codesByTopic / io / loadGeometry.cpp：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MultiScalarField2D<t> boolMask(nx, ny);</t></span><br><span class="line"><span class="function">plb_ifstream <span class="title">ifile</span><span class="params">(<span class="string">"geometry.dat"</span>)</span></span>;</span><br><span class="line">ifile >> boolMask;</span><br></pre></td></tr></tbody></table></figure>
+<p>下一步，使用函数defineDynamics的一个版本实例化反弹节点：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">defineDynamics （lattice ， boolMask ， <span class="keyword">new</span>  BounceBack < T ，DESCRIPTOR > ， <span class="literal">true</span> ）;</span><br></pre></td></tr></tbody></table></figure>
+<p>对于上述的操作，并没有自动错误检测。所有使用这个功能，使用者必须要确保标量字段的尺寸与几何文件中的数据大小相对应。</p>
+<h1 id="4-问题"><a href="#4-问题" class="headerlink" title="4 问题"></a>4 问题</h1><ul>
+<li><strong>问题1：</strong></li>
+</ul>
+<p>这里提到了利用反弹边界条件来实现wall的定义，通常wall的条件表现为边界速度为0（静止的wall），<strong>那么是否能通过设定Dirichlet边界条件，并使其速度值=0来实现固态的边界条件呢？</strong></p>
+<p>与此同时，我还看到，在LBM中，运动的wall，通常还是用反弹方式来实现：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://s2.ax1x.com/2019/05/27/VZvvzq.png" alt title>
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<p>并没有用Dirichlet。</p>
+<p>关于这一点，我认为还是可以通过利用Dirichlet来实现。因为本质上，<strong>不管是运动的wall还是静止的wall还是Dirichlet条件</strong>。</p>
+<p>可以在案例中进行计算试试。</p>
+<ul>
+<li><strong>问题2：</strong></li>
+</ul>
+<p>在定义反弹边界条件的时候，直接指定了反弹边界节点处应用BounceBack<t,descriptor> 这种动态行为。而在前面的边界条件的实施的时候，并没有看到指定动态行为的代码。是否这个工作包含在内部的代码以内，还是说通过数据处理器来实现了?</t,descriptor></p>
+<p>这个目前没有答案，需要进一步去看代码。</p>
+<p>话说回来，文章开始写是5月22号，到现在才发布。<strong>足足写了5天</strong>，还遗留下很多疑惑。果然边界条件还是不好弄啊。</p>
+<p>对上述两个问题有清楚的大佬，或者对本文有疑问的同学，均可以在下方留言。</p>
+<p>另外，欢迎大家加群一起讨论。</p>
+<p>[1]: Krüger, T.K.H.K., The Lattice Boltzmann Method:  Principles and Practice. 2017.</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-05-27T14:26:09.335Z" itemprop="dateUpdated">2019-05-27 22:26:09</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LBM/">LBM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Palabos/">Palabos</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/8fa2b4d0.html&title=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/8fa2b4d0.html&title=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&source=边界条件分为两种，一种是和网格对齐的，直线型的边界条件。一种则是弯曲型的边界条件。这两种边界条件，都可以在Palabos里面轻松实现。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/8fa2b4d0.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&url=hxblog.top/post/8fa2b4d0.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/8fa2b4d0.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/3088ae68.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">本站启用新域名</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/cd85bfda.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">欢迎加入本博客交流群</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/8fa2b4d0.html&title=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/8fa2b4d0.html&title=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&source=边界条件分为两种，一种是和网格对齐的，直线型的边界条件。一种则是弯曲型的边界条件。这两种边界条件，都可以在Palabos里面轻松实现。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/8fa2b4d0.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabosos（4）：边界条件》 — 时光之笔&url=hxblog.top/post/8fa2b4d0.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/8fa2b4d0.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/8fa2b4d0.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>

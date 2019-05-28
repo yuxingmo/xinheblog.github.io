@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>matlab：LBMD2Q9的迁移 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="matlab,LBM">
+    <meta name="description" content="LBM的迁移，实际上就是数组元素的平移。">
+<meta name="keywords" content="matlab,LBM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="matlab：LBMD2Q9的迁移">
+<meta property="og:url" content="hxblog.top/post/98b0c1dd.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="LBM的迁移，实际上就是数组元素的平移。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca00b90a4249.png">
+<meta property="og:image" content="https://i.loli.net/2019/03/31/5ca017cbd843f.png">
+<meta property="og:updated_time" content="2019-03-31T02:32:02.729Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="matlab：LBMD2Q9的迁移">
+<meta name="twitter:description" content="LBM的迁移，实际上就是数组元素的平移。">
+<meta name="twitter:image" content="https://i.loli.net/2019/03/31/5ca00b90a4249.png">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">matlab：LBMD2Q9的迁移</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">matlab：LBMD2Q9的迁移</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-03-30T15:52:06.000Z" itemprop="datePublished" class="page-time">
+  2019-03-30
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#一种C形式的迁移"><span class="post-toc-text">一种C形式的迁移</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-数组操作型"><span class="post-toc-text">2 数组操作型</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-使用circshift"><span class="post-toc-text">3 使用circshift</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-matlab：LBMD2Q9的迁移" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">matlab：LBMD2Q9的迁移</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-03-30 23:52:06" datetime="2019-03-30T15:52:06.000Z" itemprop="datePublished">2019-03-30</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>LBM的迁移，实际上就是数组元素的平移。</p>
+<a id="more"></a>
+<p>做迁移的时候，最需要注意的就是数值覆盖。所以用C来实现的时候，替代的顺序和传递的顺序应该是相反的。D2Q9的离散格式如下：</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2019/03/31/5ca00b90a4249.png" alt="D2Q9" title>
+                </div>
+                <div class="image-caption">D2Q9</div>
+            </figure>
+<p>f1(i+1)=f(i)<br>f3(i)=f3(i+1)<br>以此类推。</p>
+<h1 id="一种C形式的迁移"><a href="#一种C形式的迁移" class="headerlink" title="一种C形式的迁移"></a>一种C形式的迁移</h1><p>用for循环语句：</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#f1,f3</span></span><br><span class="line"><span class="keyword">for</span> <span class="attribute">j</span>=1:m</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=n:-1:2</span><br><span class="line">        f(i,j,1)=f(i-1,j,1);</span><br><span class="line">    end</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=1:(n-1)</span><br><span class="line">        f(i,j,3)=f(i+1,j,3);</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"><span class="comment">#f2,f5,f6</span></span><br><span class="line"><span class="keyword">for</span> <span class="attribute">j</span>=m:-1:2</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=1:n</span><br><span class="line">        f(i,j,2)=f(i,j-1,2);</span><br><span class="line">    end</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=n:-1:2</span><br><span class="line">        f(i,j,5)=f(i-1,j-1,5);</span><br><span class="line">    end</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=1:(n-1)</span><br><span class="line">        f(i,j,6)=f(i+1,j-1,6);</span><br><span class="line">    end</span><br><span class="line">end</span><br><span class="line"><span class="comment">#f4,f7,f8</span></span><br><span class="line"><span class="keyword">for</span> <span class="attribute">j</span>=1:(m-1)</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=1:n</span><br><span class="line">        f(i,j,4)=f(i,j+1,4);</span><br><span class="line">    end</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=1:(n-1)</span><br><span class="line">        f(i,j,7)=f(i+1,j+1,7);</span><br><span class="line">    end</span><br><span class="line">    <span class="keyword">for</span> <span class="attribute">i</span>=n:-1:2</span><br><span class="line">        f(i,j,8)=f(i-1,j+1,8);</span><br><span class="line">    end</span><br><span class="line">end</span><br></pre></td></tr></tbody></table></figure>
+<p>这种方式的代码可以很方便的改成C语言。</p>
+<h1 id="2-数组操作型"><a href="#2-数组操作型" class="headerlink" title="2 数组操作型"></a>2 数组操作型</h1><p>在MATLAB里面实现这个还有更简洁的方式：</p>
+<figure class="highlight lisp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="number">2</span><span class="symbol">:n</span>,:,<span class="number">1</span>)=f(<span class="number">1</span><span class="symbol">:n-1</span>,:,<span class="number">1</span>)<span class="comment">;</span></span><br><span class="line">f(:,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">2</span>)=f(:,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">2</span>)<span class="comment">;</span></span><br><span class="line">f(<span class="number">1</span><span class="symbol">:n-1</span>,:,<span class="number">3</span>)=f(<span class="number">2</span><span class="symbol">:n</span>,:,<span class="number">3</span>)<span class="comment">;</span></span><br><span class="line">f(:,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">4</span>)=f(:,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">4</span>)<span class="comment">;</span></span><br><span class="line">f(<span class="number">2</span><span class="symbol">:n</span>,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">5</span>)=f(<span class="number">1</span><span class="symbol">:n-1</span>,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">5</span>)<span class="comment">;</span></span><br><span class="line">f(<span class="number">1</span><span class="symbol">:n-1</span>,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">6</span>)=f(<span class="number">2</span><span class="symbol">:n</span>,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">6</span>)<span class="comment">;</span></span><br><span class="line">f(<span class="number">1</span><span class="symbol">:n-1</span>,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">7</span>)=f(<span class="number">2</span><span class="symbol">:n</span>,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">7</span>)<span class="comment">;</span></span><br><span class="line">f(<span class="number">2</span><span class="symbol">:n</span>,<span class="number">1</span><span class="symbol">:m-1</span>,<span class="number">8</span>)=f(<span class="number">1</span><span class="symbol">:n-1</span>,<span class="number">2</span><span class="symbol">:m</span>,<span class="number">8</span>)<span class="comment">;</span></span><br></pre></td></tr></tbody></table></figure>
+<p>这种实现和第一种没有本质区别。只是代码显得更简洁。但是如果向其他离散形式进行拓展，比如像三维D3Q15这种就不适合了，需要手动写很多代码。<br>所以一个更简单，推广性更好的实现是使用数组平移函数circshift。</p>
+<h1 id="3-使用circshift"><a href="#3-使用circshift" class="headerlink" title="3 使用circshift"></a>3 使用circshift</h1><p><a href="https://ww2.mathworks.cn/help/matlab/ref/circshift.html#description" target="_blank" rel="noopener">circshift</a>是一个数组平移函数。</p>
+<p>这种方式circshift是一个循环平移函数，这里的循环实际上我们并不需要。</p>
+<p>假设a=[1,2,3,4,5]，我们执行b=circshift(a,1)会得到：<br></p><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="https://i.loli.net/2019/03/31/5ca017cbd843f.png" alt="circshift" title>
+                </div>
+                <div class="image-caption">circshift</div>
+            </figure><br>讲道理，我们不需要把5移动到b(1)，而希望b(1)=a(1)。所以执行完这个以后，需要对边界进行处理。<p></p>
+<p>代码如下：</p>
+<figure class="highlight gcode"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">for i=<span class="number">1</span>:<span class="number">9</span></span><br><span class="line">   b<span class="comment">(i)</span>=circshift<span class="comment">(f(:,:,i)</span>,[cx<span class="comment">(i)</span>,cy<span class="comment">(i)</span>,<span class="number">0</span>]);</span><br><span class="line">   <span class="attr">#x和y的起始点</span></span><br><span class="line"><span class="attr">   qsdx=1</span><span class="number">+0.5</span>*<span class="comment">(cx(i)</span>^<span class="number">2</span>+cx<span class="comment">(i)</span>);</span><br><span class="line">   qsdy=<span class="number">1</span><span class="number">+0.5</span>*<span class="comment">(cy(i)</span>^<span class="number">2</span>+cy<span class="comment">(i)</span>);</span><br><span class="line">   <span class="attr">#x和y的终点</span></span><br><span class="line"><span class="attr">   zdx=n+0</span><span class="number">.5</span><span class="comment">(cx(i)</span>-cx<span class="comment">(i)</span>^<span class="number">2</span>));</span><br><span class="line">   zdy=m<span class="number">+0.5</span><span class="comment">(cy(i)</span>-cy<span class="comment">(i)</span>^<span class="number">2</span>));</span><br><span class="line">   f<span class="comment">(qsdx:zdx,qsdy:zdy)</span>=b<span class="comment">(qsdx:zdx,qsdy:zdy)</span>;</span><br><span class="line">e<span class="symbol">nd</span></span><br></pre></td></tr></tbody></table></figure>
+<p>这里构造了起始点和终点函数。想象一下，假设平移向量是（1，-1）。那么我们需要的是在x方向从2到n，在y方向需要的是从1到m-1。<br>于是构造了起始点和终点的函数分别为：</p>
+<p>$$<br>x_{qsd} = 1 + { {c{x^2} + cx} \over 2}<br>$$</p>
+<p>$$<br>{x_{zd}} = n + { {cx - c{x^2} } \over 2}<br>$$</p>
+<p>这里给的是x方向的，y方向的构造一模一样，只不过cx改为cy，n改为m而已。把平移函数cx=1，cy=-1代入公式，可以得到起始点和终点为：</p>
+<p>$$<br>\eqalign{<br>  & x = 2:n  \cr<br>  & y = 1:m - 1 \cr}<br>$$<br>这和我们需要的数据是一模一样的。<br>这个方法的拓展性比较好，不需要针对不同的离散格子模型全部重写代码。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-03-31T02:32:02.729Z" itemprop="dateUpdated">2019-03-31 10:32:02</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LBM/">LBM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/matlab/">matlab</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/98b0c1dd.html&title=《matlab：LBMD2Q9的迁移》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/98b0c1dd.html&title=《matlab：LBMD2Q9的迁移》 — 时光之笔&source=LBM的迁移，实际上就是数组元素的平移。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/98b0c1dd.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《matlab：LBMD2Q9的迁移》 — 时光之笔&url=hxblog.top/post/98b0c1dd.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/98b0c1dd.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/post/63a9fbcd.html" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">好物推荐：证照之星[WPC-工具]</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/6eab7de2.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">一台电脑连接两个GitHub账户</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/98b0c1dd.html&title=《matlab：LBMD2Q9的迁移》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/98b0c1dd.html&title=《matlab：LBMD2Q9的迁移》 — 时光之笔&source=LBM的迁移，实际上就是数组元素的平移。" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/98b0c1dd.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《matlab：LBMD2Q9的迁移》 — 时光之笔&url=hxblog.top/post/98b0c1dd.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/98b0c1dd.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/98b0c1dd.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
