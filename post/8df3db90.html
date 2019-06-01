@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?11522de70f8310494762f6955cb0aac4"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>学习笔记：Palabos（6）：数据处理器相关 | 时光之笔 | 正在寻求自救的懒癌晚期患者</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="LBM,Palabos">
+    <meta name="description" content="数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，是一个非常庞大的东西。 鉴于能力有限，本文的讨论仅基于用户文档中关于数据处理的部分，以及参考了Palabos V2.0的开发文档。">
+<meta name="keywords" content="LBM,Palabos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习笔记：Palabos（6）：数据处理器相关">
+<meta property="og:url" content="hxblog.top/post/8df3db90.html">
+<meta property="og:site_name" content="时光之笔">
+<meta property="og:description" content="数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，是一个非常庞大的东西。 鉴于能力有限，本文的讨论仅基于用户文档中关于数据处理的部分，以及参考了Palabos V2.0的开发文档。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-06-01T14:34:44.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习笔记：Palabos（6）：数据处理器相关">
+<meta name="twitter:description" content="数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，是一个非常庞大的东西。 鉴于能力有限，本文的讨论仅基于用户文档中关于数据处理的部分，以及参考了Palabos V2.0的开发文档。">
+    
+        <link rel="alternate" type="application/atom+xml" title="时光之笔" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/style.css?v=1.7.2">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Xin He</h5>
+          <a href="mailto:xinhehust2016@163.com" title="xinhehust2016@163.com" class="mail">xinhehust2016@163.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives/">
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags/">
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories/">
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/yuxingmo" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://weibo.com/u/3054094863" target="_blank">
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://xtt.wacaocao.cn/" target="_blank">
+                <i class="icon icon-lg icon-star"></i>
+                友情链接
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://palabos.asce.top/" target="_blank">
+                <i class="icon icon-lg icon-code"></i>
+                PalabosV2.0
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/about">
+                <i class="icon icon-lg icon-info"></i>
+                关于
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">学习笔记：Palabos（6）：数据处理器相关</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">学习笔记：Palabos（6）：数据处理器相关</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-29T07:46:03.000Z" itemprop="datePublished" class="page-time">
+  2019-05-29
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-数据处理器的作用"><span class="post-toc-text">1 数据处理器的作用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-数据处理器的分类"><span class="post-toc-text">2 数据处理器的分类</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-定义自己的数据处理器"><span class="post-toc-text">3 定义自己的数据处理器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-用于局部操作的数据处理器"><span class="post-toc-text">3.1 用于局部操作的数据处理器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2-用于矩阵中的数据处理器"><span class="post-toc-text">3.2 用于矩阵中的数据处理器</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4-需要覆盖的其他方法"><span class="post-toc-text">4 需要覆盖的其他方法</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5-绝对和相对坐标"><span class="post-toc-text">5 绝对和相对坐标</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#6-未完待续"><span class="post-toc-text">6 未完待续</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-学习笔记：Palabos（6）：数据处理器相关" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">学习笔记：Palabos（6）：数据处理器相关</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-29 15:46:03" datetime="2019-05-29T07:46:03.000Z" itemprop="datePublished">2019-05-29</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/学习笔记/">学习笔记</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style="display:none">
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，是一个非常庞大的东西。</p>
+<p>鉴于能力有限，本文的讨论仅基于用户文档中关于<a href="http://www.palabos.org/documentation/userguide/data-processors.html" target="_blank" rel="noopener">数据处理</a>的部分，以及参考了Palabos V2.0的<a href="http://palabos.asce.top/" target="_blank" rel="noopener">开发文档</a>。</p>
+<a id="more"></a>
+<h1 id="1-数据处理器的作用"><a href="#1-数据处理器的作用" class="headerlink" title="1 数据处理器的作用"></a>1 数据处理器的作用</h1><p>Dynamic类和数据处理器是Palabos构建程序的基础部分，文档上说是Palabos的螺钉螺母，就是这个意思。Dynamic是处理LBM单元计算，也就是局部操作：比如计算平衡态分布函数，碰撞等操作。而数据处理器是一个更加通用，且具有并行化特征的数据处理方法。只要不涉及边界，细化网格，并行程序或者其他一些Palabos里复杂的东西，Dynamic还是相对简单的。</p>
+<p><strong>数据处理器解决除了Dynamic解决不了的一切问题</strong>。处理模型中的非局部部分，在标量场和张量场上执行操作，并且处理多块网格之间的耦合，并且为了增加性能，它们必须高效而且满足并行化的特征。</p>
+<p>因此数据处理器理解起来会比较困难，种类繁多，层层的迭代调用，并且包含了很多复杂的C++用法。好在不需要全部理解它们。Palabos的封装性做得很好，很大程度上我们需要去知道其调用方法即可以解决一般性的问题。</p>
+<p>当在处理标量场和张量场时，数据处理器的重要性尤其明显。与block-lattice不同，这些场没有智能单元，比如lattice-block都有一个引用指向其dynamic。因此，数据处理器是对它们执行集体操作的唯一有效方式。比如考虑三维的速度张量场：<code>TensorField3D<t,3> velocity</t,3></code>(其中每个单元都有<code>Array <t，3></t，3></code>类型的速度变量)，可以通过调用函数<code>computeVelocity</code>从LB模拟获得这样的速度场。假使我们需要计算<code>velocity</code>的空间导数，那么只能用数据处理器来进行。因为数据处理器是并行的、可拓展的、高效的。例如<code>computeVorticity()</code>和<code>computeStrainRate()</code>那样。</p>
+<h1 id="2-数据处理器的分类"><a href="#2-数据处理器的分类" class="headerlink" title="2 数据处理器的分类"></a>2 数据处理器的分类</h1><p>根据用途，数据处理器可分为三大类：</p>
+<ul>
+<li>将动态对象分配给lattice的子域，初始化分布函数等等，这些方法在<a href="http://www.palabos.org/documentation/userguide/problem-setup.html#initial-values" target="_blank" rel="noopener">密度和速度的初始值</a>和<a href="http://www.palabos.org/documentation/userguide/boundary-conditions.html#boundary-conditions" target="_blank" rel="noopener">定义边界条件</a>一节中进行了解释，这些函数在<a href="http://www.palabos.org/documentation/userguide/appendix-functions.html#appendix-in-place-operations" target="_blank" rel="noopener">附录中</a>中列出。</li>
+<li>实现特定的物理模型，许多模型是预先设定好的。</li>
+<li>用于数据评估，也就是后处理。比如<code>computeVelocity</code>这些</li>
+</ul>
+<h1 id="3-定义自己的数据处理器"><a href="#3-定义自己的数据处理器" class="headerlink" title="3 定义自己的数据处理器"></a>3 定义自己的数据处理器</h1><h2 id="3-1-用于局部操作的数据处理器"><a href="#3-1-用于局部操作的数据处理器" class="headerlink" title="3.1 用于局部操作的数据处理器"></a>3.1 用于局部操作的数据处理器</h2><p>用于局部操作的数据处理器通常出现于Palabos内置的数据处理器或者Dynamic无法满足条件的情况。<strong>对于局部的数据操作，Palabos提供了一些抽象的接口：<code>OneCellFunctionalXD</code>，<code>OneCellIndexedFunctionalXD</code></strong>。应该在这些接口上去实现你要的功能，也就是继承他们，并实现它的虚方法，而不是去重写这部分代码。</p>
+<p>比如通过实现<code>OneCellFunctionalXD</code>可以执行局部化的操作，而不用访问周围的单元。如果操作取决于周围的单元，则可以继承<code>OneCellIndexedFunctionalXD</code>并实现该方法</p>
+<p>这样的案例可以在examples / showCases / multiComponent2d中找到相应的示例程序。该示例程序中需要定制的初始化过程来访问lattice的外部标量以进行热仿真。</p>
+<h2 id="3-2-用于矩阵中的数据处理器"><a href="#3-2-用于矩阵中的数据处理器" class="headerlink" title="3.2 用于矩阵中的数据处理器"></a>3.2 用于矩阵中的数据处理器</h2><p>当处理的对象不再是一个局部的单元而是一个矩阵时，Palabos也提供了相应的接口，类似于3.1节的那样，是一些抽象的接口。为了实现你自己的功能，需要继承他们并且实现里面的方法。</p>
+<p>在矩阵上执行操作一般是在矩阵的所有元素执行某个循环来达到目的。如果矩阵的内存被分为多块，就像Palabos里的Multiblock一样，并且这些组件分布在并行机器的节点上，这样你的循环也需要分为几个小的循环。Palabos的数据处理器的目的就是为了自动执行这些细分，然后它提供单个域的坐标，并且要求在这些单个的域上执行操作，而不是整个完整的域。</p>
+<p>下面是一个例子，假设要操作一个域中单元格的分布函数，比如将f5和f1的值互换:</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span><<span class="keyword">typename</span> T, <span class="keyword">template</span><<span class="keyword">typename</span> U> <span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span>></span></span><br><span class="line"><span class="class"><span class="title">class</span> <span class="title">Invert_1_5_Functional2D</span> :</span> <span class="keyword">public</span> BoxProcessingFunctional2D_L<t,descriptor> {</t,descriptor></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// ... implement other important methods here.</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(Box2D domain, BlockLattice2D<t,descriptor>& lattice)</t,descriptor></span></span></span><br><span class="line"><span class="function">    </span>{</span><br><span class="line">        <span class="keyword">for</span> (plint iX=domain.x0; iX<=domain.x1; ++ix) {< span><br><span class="line">            <span class="keyword">for</span> (plint iY=domain.y0; iY<=domain.y1; ++iy) {< span><br><span class="line">                Cell<t,descriptor>& cell = lattice.get(iX,iY);</t,descriptor></span><br><span class="line">                <span class="comment">// Use the function swap from the C++ STL to swap the two values.</span></span><br><span class="line">                <span class="built_in">std</span>::swap(cell[<span class="number">1</span>], cell[<span class="number">5</span>]);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">};</span><br></=domain.y1;></span></=domain.x1;></span></pre></td></tr></tbody></table></figure>
+<p>从上面可以看到，<code>Invert_1_5_Functional2D</code>这个类继承自<code>BoxProcessingFunctional2D_L</code>。函数的第一个参数是该函数作用的域。一般是分块之后的子域。同样第二个参数也是对应的一个格子块，通常是原子块（block-lattice）而不是一个多块（multi-block-lattice）。因为<code>process</code>方法，通常作为一个域处理器。</p>
+<p>在这个方法中，值得注意的是内部的循环需要自己写。而cell级别的操作不一样。cell只需要处理一个单元的信息。因此，<code>process</code>的效率更高。</p>
+<p>此外，除了局部操作外，你还可以通过<code>BoxProcessingFunctional2D_L</code>进行非局部操作，比如把f1和右边的f5互换：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">process</span><span class="params">(Box2D domain, BlockLattice2D<t,descriptor>& lattice)</t,descriptor></span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">for</span> (plint iX=domain.x0; iX<=domain.x1; ++ix) {< span><br><span class="line">        <span class="keyword">for</span> (plint iY=domain.y0; iY<=domain.y1; ++iy) {< span><br><span class="line">            Cell<t,descriptor>& cell = lattice.get(iX,iY);</t,descriptor></span><br><span class="line">            Cell<t,descriptor>& partner = lattice.get(iX+<span class="number">1</span>,iY);</t,descriptor></span><br><span class="line">            <span class="built_in">std</span>::swap(cell[<span class="number">1</span>], partner[<span class="number">5</span>]);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></=domain.y1;></span></=domain.x1;></span></pre></td></tr></tbody></table></figure>
+<p>在用这种非局部操作的时候，为了保证在操作的时候不要超过lattice的索引范围，要遵守两个规则：</p>
+<ol>
+<li>非局部操作不能超越相邻2个格子，即只能与附近的格子进行数据操作。比如你可以写<code>lattice.get(iX+1,iY)</code>这样的，但是不能有<code>lattice.get(iX+2,iY)</code>这样的；</li>
+<li>在通信范围内作用的数据处理器中不允许进行非本地操作。</li>
+</ol>
+<p>这里的通信范围（<code>communication envelope</code>）指的是一个block外面包含的一层通信用的节点。</p>
+<p>总结一下数据处理器的功能：</p>
+<ul>
+<li>访问一个块方位内的单元，可以读取单元的变量并且改变他们</li>
+<li>可以根据索引访问单元及邻近的单元</li>
+<li>对单元内数据的操作可能与工件有关，因此数据处理器也具有空间依赖性，但是需要注意的是索引时需要采用绝对坐标。</li>
+</ul>
+<h1 id="4-需要覆盖的其他方法"><a href="#4-需要覆盖的其他方法" class="headerlink" title="4 需要覆盖的其他方法"></a>4 需要覆盖的其他方法</h1><p>除了process需要覆盖以外，还有一些其他的方法也是必须要重载的。还是以3.2节中的例子<code>Invert_1_5_Functional2D</code><br>为例，以下三个方法需要重载：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Invert_1_5_Functional2D<t,descriptor>* clone() <span class="keyword">const</span></t,descriptor></span><br><span class="line">{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Invert_1_5_Functional2D<t,descriptor>(*<span class="keyword">this</span>);</t,descriptor></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">getModificationPattern</span><span class="params">(<span class="built_in">std</span>::<span class="built_in">vector</span><<span class="keyword">bool</span>>& isWritten)</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    isWritten[<span class="number">0</span>] = <span class="literal">true</span>;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">BlockDomain::<span class="function">DomainT <span class="title">appliesTo</span><span class="params">()</span> <span class="keyword">const</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">    <span class="keyword">return</span> BlockDomain::bulk;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>第一个方法是一个克隆方法的继承。</p>
+<p>第二个方法中，<code>isWritten</code>是一个bool类型的向量，这个字段等于所涉及的块的数量。而这个函数的作用就是为这个字段赋值true/false。在例子中的情况是一个block，并且该方法将这个block的<code>isWritten</code>赋予true值。Palabos利用该信息来决定在执行数据处理器之后是否需要块的进程间通信。</p>
+<p>第三个方法中，方法<code>applyTo</code>用于决定数据处理器是仅作用于模拟的实际域（<code>BlockDomain :: bulk</code>）还是包括了通信包络和实际域的情况（<code>BlockDomain :: bulkAndEnvelope</code>）。其中<code>BlockDomain</code>是一个枚举类型，其值如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">值</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">bulk</td>
+<td style="text-align:center">Refers to bulk-nodes, without envelope</td>
+</tr>
+<tr>
+<td style="text-align:center">envelope</td>
+<td style="text-align:center">Refers to nodes on the envelope, without the bulk</td>
+</tr>
+<tr>
+<td style="text-align:center">bulkAndEnvelope</td>
+<td style="text-align:center">Refers to the full domain</td>
+</tr>
+</tbody>
+</table>
+<p>这里的<code>bulk</code>应该就是block-lattice内部的节点，<code>envelope</code>是外部的节点，<code>bulkAndEnvelope</code>是两者都包含的全部的节点。通常情况下，选择<code>bulk</code>就可以了因为包含<code>envelope</code>会在一些非局部数据操作上产生索引溢出的问题。不过<code>envelope</code>的存在也在一定程度上能防止产生索引溢出。</p>
+<p>不过<code>envelope</code>的设置并不是为了防止非局部操作的索引溢出而存在的，<code>envelope</code>的设置是为了多块之间的通信，以在需要的时候更新<code>envelope</code>这部分的值。只有在两种情况下，会需要到<code>envelope</code>。第一种是在为一些或者所有单元分配新的Dynamic时，会需要用到<code>envelope</code>；第二种是在修改dynamic的内部状态，就像调用函数<code>defineVelocity</code>在Dirichelet边界节点上分配新的速度值那样。在这些情况下，</p>
+<p>只有在（1）为一些或所有单元格分配新的动力学对象时才需要包含包络（就像在调用函数时一样）defineDynamics），或者（2）如果修改动态对象的内部状态（就像调用函数 defineVelocity在Dirichlet边界节点上分配新的速度值时那样）。在这些情况下，包括包络是必要的，因为在原子块之间的通信步骤期间不转移动态对象的性质和内容。传递的唯一信息是单元数据（分布函数和外部标量）。</p>
+<p>如果决定要把<code>envelope</code>包含在数据处理器的方法中，则必须要遵守两条规则，否则，将出现未定义的行为</p>
+<ol>
+<li>数据处理器必须是局部的，没有额外的<code>envelope</code>用于处理非局部数据访问；</li>
+<li>数据处理器最多仅可以对一个涉及的块具有写访问权，即从方法getModificationPattern（）返回的向量isWritten最多只可以在一个地方为true。</li>
+</ol>
+<p>关于第二条规则，如上面的例子所示，仅仅让isWritten(0)有了真值。不过我看了下文档，发现了在BoxProcessingFunctional2D中的getModificationPattern函数定义如下：</p>
+<figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> ‪BoxProcessingFunctional2D::getModificationPattern(<span class="built_in">std</span>::<span class="built_in">vector</span><<span class="keyword">bool</span>>& isWritten) <span class="keyword">const</span> {</span><br><span class="line">     <span class="built_in">std</span>::<span class="built_in">vector</span><modif::modift> modified(isWritten.size());</modif::modift></span><br><span class="line">     ‪getTypeOfModification(modified);</span><br><span class="line">     ‪PLB_ASSERT(modified.size()==isWritten.size());</span><br><span class="line">     <span class="keyword">for</span> (‪pluint iBlock=<span class="number">0</span>; iBlock<iswritten.size(); ++iblock) {< span><br><span class="line">         isWritten[iBlock] = modified[iBlock]==‪modif::nothing ? <span class="literal">false</span>:<span class="literal">true</span>;</span><br><span class="line">     }</span><br><span class="line"> }</span><br></iswritten.size();></span></pre></td></tr></tbody></table></figure>
+<p>可以看到，其实在这个里面的getModificationPattern()函数可以不止对一个块赋予真值。所以这一点有点不太清楚。</p>
+<p>总而言之，数据处理器中的<code>appliesTo</code>函数，通常还是让啊选择bulk即可。</p>
+<h1 id="5-绝对和相对坐标"><a href="#5-绝对和相对坐标" class="headerlink" title="5 绝对和相对坐标"></a>5 绝对和相对坐标</h1><p>当process作用在一个原子块（atomic-block）的时候，单元在各自块里的索引(iX, iY)只是在做内部循环的时候有用。因为他们只是代表局部的变量。如果要涉及全局坐标的话，需要对这个相对的坐标做一个转换：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Access the position of the atomic-block inside the multi-block.</span></span><br><span class="line">Dot2D relativePosition = lattice.getLocation();</span><br><span class="line"></span><br><span class="line"><span class="comment">// Convert local coordinates to global ones.</span></span><br><span class="line">plint globalX = iX + relativePosition.x;</span><br><span class="line">plint globaly = iY + relativePosition.x;</span><br></pre></td></tr></tbody></table></figure>
+<p>根据这个案例可以看到，原子块本身应该是具有坐标的。这个案例可以在<code>examples/showCases/boussinesqThermal2d/</code>中找到。这种转换有些尴尬，所以对单个单元的局部操作，采用<code>OneCellIndexedFunctionalXD</code>这样的接口可能更好。</p>
+<p>当一个process作用在多个块的时候，相对坐标没有必要完全一样。方法process的参数domian始终作为第一个原子块的本地坐标提供。要获取其他块的坐标，必须应用相应的转换：<br></p><figure class="highlight cpp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Dot2D offset_0_1 = computeRelativeDisplacement(lattice0, lattice1);</span><br><span class="line">Dot2D offset_0_2 = computeRelativeDisplacement(lattice0, lattice2);</span><br><span class="line"></span><br><span class="line">plint iX1 = iX + offset_0_1.x;</span><br><span class="line">plint iY1 = iY + offset_0_1.y;</span><br><span class="line">plint iX2 = iX + offset_0_2.x;</span><br><span class="line">plint iY2 = iY + offset_0_2.y;</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p>这里涉及到了三个原子块，lattice0和lattice1，以及lattice3。而函数<code>computeRelativeDisplacement</code>则是计算两个格子块的相对位移。这样每个块里面的坐标就可以求出来了，值得注意的是，计算位移通常出现在以下三种情况：</p>
+<ol>
+<li>应用数据处理器的多块不具有相同的数据分布，因为它们的构造不同。</li>
+<li>应用数据处理器的多块不具有相同的数据分布，因为它们的大小不同。例如<code>computeVelocity</code>，它计算子域上的速度。因为这个数据处理器作用在原始域和对应的子域上。</li>
+<li>数据处理器包括<code>envelope</code>。在这种情况下，相对位移源于体节点与来自不同原子块的包络节点耦合。这是为什么通常最好不将<code>envelope</code>包括在数据处理器的应用领域中的另一个原因。</li>
+</ol>
+<h1 id="6-未完待续"><a href="#6-未完待续" class="headerlink" title="6 未完待续"></a>6 未完待续</h1><p>果然比较复杂。</p>
+<p>这个用户文档都看的云里雾里的。。。整篇文章不做任何参考。我估计会有很多理解上的错误和偏颇。后续了解了再来填坑。</p>
+<p>不能再啃下去了，要结合例子看才会有效果。</p>
+<p>这部分工作先暂时这样。包括用户文档的阅读。</p>
+<p>下一步要仔细研究几个案例。</p>
+<p>先过一遍<a href="http://www.palabos.org/documentation/tutorial/" target="_blank" rel="noopener">Tutorials</a>。</p>
+<p>接下来就是Guo的案例。</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2019-06-01T14:34:44.830Z" itemprop="dateUpdated">2019-06-01 22:34:44</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="hxblog.top">
+            <img src="/img/avatar.jpg" alt="Xin He">
+            Xin He
+        </a>
+    </footer>
+</blockquote>
+
+        
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LBM/">LBM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Palabos/">Palabos</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/8df3db90.html&title=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/8df3db90.html&title=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&source=数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/8df3db90.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&url=hxblog.top/post/8df3db90.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/8df3db90.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/post/bd68ef14.html" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">免费开源的FTP增量同步工具：FreeFileSync</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "W3wpkMTDoX8fehE2IjCHXCFC-gzGzoHsz",
+            appKey: "HIps7ejwhpHld5ApRJ91CQ8x",
+            avatar: "mm",
+            placeholder: "欢迎评论！",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
+
+
+
+
+
+
+
+</article>
+
+
+
+</div>
+
+        <footer class="footer">
+    
+    <div class="bottom">
+        <p><span>Xin He &copy; 2018 - 2019</span>
+            <span>
+                
+                <a href="http://www.beian.miit.gov.cn" target="_blank">鄂ICP备19011262号-1</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+	
+	<div class="top">
+        
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+	
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=hxblog.top/post/8df3db90.html&title=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&pic=hxblog.top/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=hxblog.top/post/8df3db90.html&title=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&source=数据处理器用来处理非局部操作。我们知道Dynamic处理局部操作，数据处理器来处理Dynamic完成不了的工作。数据处理器比较难，我之前以及接触到了一些，..." data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=hxblog.top/post/8df3db90.html" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《学习笔记：Palabos（6）：数据处理器相关》 — 时光之笔&url=hxblog.top/post/8df3db90.html&via=hxblog.top" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=hxblog.top/post/8df3db90.html" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=hxblog.top/post/8df3db90.html" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: false };
+
+
+</script>
+
+<script src="/js/main.min.js?v=1.7.2"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="/js/search.min.js?v=1.7.2" async></script>
+
+
+
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<script async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+</body>
+</html>
