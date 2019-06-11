@@ -35,7 +35,7 @@
 <meta property="og:description" content="IncomprFlowParam是一个代表不可压缩流体的参数的类。包括流体设定的一些基本信息，比如速度，雷诺数，格子长度，和格子分辨率等。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://s2.ax1x.com/2019/06/02/VGzuPs.png">
-<meta property="og:updated_time" content="2019-06-02T15:42:53.445Z">
+<meta property="og:updated_time" content="2019-06-11T13:33:53.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习笔记：Palabos（7）:IncomprFlowParam">
 <meta name="twitter:description" content="IncomprFlowParam是一个代表不可压缩流体的参数的类。包括流体设定的一些基本信息，比如速度，雷诺数，格子长度，和格子分辨率等。">
@@ -195,7 +195,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-private参数"><span class="post-toc-text">1 private参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-常用方法"><span class="post-toc-text">2 常用方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getLatticeNu"><span class="post-toc-text">getLatticeNu()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getTau"><span class="post-toc-text">getTau()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getOmega"><span class="post-toc-text">getOmega()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getDeltaX"><span class="post-toc-text">getDeltaX()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getLx"><span class="post-toc-text">getLx()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nCell"><span class="post-toc-text">nCell()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getNx"><span class="post-toc-text">getNx()</span></a></li></ol></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-private参数"><span class="post-toc-text">1 private参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-常用方法"><span class="post-toc-text">2 常用方法</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getLatticeNu"><span class="post-toc-text">getLatticeNu()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getTau"><span class="post-toc-text">getTau()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getOmega"><span class="post-toc-text">getOmega()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getDeltaX"><span class="post-toc-text">getDeltaX()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getLx"><span class="post-toc-text">getLx()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#nCell"><span class="post-toc-text">nCell()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getNx"><span class="post-toc-text">getNx()</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#getDeltaT"><span class="post-toc-text">## getDeltaT()</span></a></li></ol></li></ol>
         </nav>
     </aside>
 
@@ -318,6 +318,10 @@
 <p>$$<br>(\text { int })\left(\frac{\text { physicalLength.lx }}{\text { physicalLength/resolution }}+0.5\right)+1<br>$$</p>
 <p>$$<br>(\text { int })(\text { resolution } \cdot 1 \mathrm{x}+0.5)+1<br>$$</p>
 <p>可以看出，其实和<code>physicalLength</code>并无关系。不是很清楚为什么要这么做。直接让resolution*lx+1不就行了吗？</p>
+<h3 id="getDeltaT"><a href="#getDeltaT" class="headerlink" title="## getDeltaT()"></a>## getDeltaT()</h3><p>计算时间步：</p>
+<figure class="highlight c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">T ‪getDeltaT() <span class="keyword">const</span>  { <span class="keyword">return</span> ‪getDeltaX()*‪getLatticeU()/‪getPhysicalU(); }</span><br></pre></td></tr></tbody></table></figure>
+<p>$$<br>d t=\frac{L}{N} \times \frac{U_{\text {latice}}}{U_{\text {phiscal}}}<br>$$</p>
+<p>默认物理长度L=1，物理速度physicalU=1。</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -344,7 +348,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2019-06-02T15:42:53.445Z" itemprop="dateUpdated">2019-06-02 23:42:53</time>
+    最后更新时间：<time datetime="2019-06-11T13:33:53.578Z" itemprop="dateUpdated">2019-06-11 21:33:53</time>
 </span><br>
 
 
